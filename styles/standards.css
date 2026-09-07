@@ -1,0 +1,9 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.wrapper {
+    padding: 0 max(120px, calc(50% - 720px));
+}
