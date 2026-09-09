@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,21 +11,241 @@
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/standards.css">
+    <link rel="stylesheet" href="./styles/pokegrid.css">
     <link rel="stylesheet" href="style.css">
 
     <script src="./scripts/templates.js"></script>
     <script src="./script.js"></script>
 </head>
-<body>
-    <header>
 
-    </header>
-    <main class="wrapper" data-id="content">
+<body onload="init()">
+    <header class="wrapper">
+        <img src="./assets/icons/Poké_Ball_icon.svg" alt="Icon Pok´ball">
         <h1>Pokédex</h1>
 
+    </header>
+    <section class="hero-section wrapper">
+        <div class="hero-container">
+            <h2>Discover the world of Pokémon</h2>
+            <p>Search, find out more and expand your knowledge <br>of your favourite Pokémon</p>
+        </div>
+
+
+    </section>
+    <section class="search-section wrapper">
+        <div class="search-container">
+            <input 
+                type="text" 
+                name="search-bar" 
+                id=""
+                data-id="search-input"
+                placeholder="Find your Pokémon (Pikachu, 25 or type electro ...)">
+            <button></button>
+        </div>
+    </section>
+    <section class="controls-container wrapper">
+
+        <div class="type-filter" id="typeFilter">
+
+            <button class="active">Alle</button>
+            <button>Normal</button>
+            <button>Feuer</button>
+            <button>Wasser</button>
+            <button>Pflanze</button>
+            <button>Elektro</button>
+            <button>Eis</button>
+            <button>Kampf</button>
+            <button>Gift</button>
+            <button>Boden</button>
+
+        </div>
+
+        <div class="list-options">
+
+            <p id="pokemonCounter">
+                <span>30</span> von <span>1.025</span> Pokémon angezeigt
+            </p>
+
+            <select id="sortPokemon">
+                <option value="number">
+                    Nummer (aufsteigend)
+                </option>
+                <option value="number">
+                    Nummer (absteigend)
+                </option>
+                <option value="name">
+                    Name (A-Z)
+                </option>
+            </select>
+
+        </div>
+
+    </section>
+    <main class="wrapper" data-id="content">
+        <div class="pokemon-grid" id="pokemonGrid">
+        </div>
+        <button data-id="load-more-button" class="load-more-btn" id="loadMoreButton">
+            + 30 weitere Pokémon laden
+        </button>
     </main>
-    <footer>
+    <footer class="footer wrapper">
+
+        <div class="logo">
+            <img src="./assets/icons/Poké_Ball_icon.svg" alt="">
+            <span>Pokédex</span>
+        </div>
+        <p>© Michael Ruml 2026</p>
+
+        <nav>
+            <a href="#">Über dieses Projekt</a>
+            <a href="#">API</a>
+            <a href="#">Impressum</a>
+        </nav>
 
     </footer>
+
+
+
+
+
+    <!-- DETAIL DIALOG -->
+
+    <dialog id="pokemonDialog">
+
+        <button class="dialog-close" id="closeDialog">
+            ×
+        </button>
+
+
+        <button class="pokemon-navigation previous" id="previousPokemon">
+            ←
+        </button>
+
+
+        <div class="pokemon-details">
+
+            <div class="details-image">
+
+                <img id="detailImage" src="" alt="">
+
+            </div>
+
+
+            <div class="details-content">
+
+                <span id="detailNumber">
+                    #025
+                </span>
+
+                <h2 id="detailName">
+                    Pikachu
+                </h2>
+
+                <div id="detailTypes">
+                    <!-- Typen -->
+                </div>
+
+
+                <div class="basic-info">
+
+                    <div>
+                        <span>Größe</span>
+                        <strong id="detailHeight">
+                            0,4 m
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Gewicht</span>
+                        <strong id="detailWeight">
+                            6,0 kg
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <!-- TABS -->
+
+                <div class="detail-tabs">
+
+                    <button class="active">
+                        Übersicht
+                    </button>
+
+                    <button>
+                        Statuswerte
+                    </button>
+
+                    <button>
+                        Entwicklungen
+                    </button>
+
+                </div>
+
+
+                <!-- BESCHREIBUNG -->
+
+                <section class="detail-section">
+
+                    <h3>Beschreibung</h3>
+
+                    <p id="detailDescription">
+                        ...
+                    </p>
+
+                </section>
+
+
+                <!-- FÄHIGKEITEN -->
+
+                <section class="detail-section">
+
+                    <h3>Fähigkeiten</h3>
+
+                    <ul id="detailAbilities">
+                        <!-- JS -->
+                    </ul>
+
+                </section>
+
+
+                <!-- STATUSWERTE -->
+
+                <section class="detail-section">
+
+                    <h3>Statuswerte</h3>
+
+                    <div id="detailStats" class="stats">
+                        <!-- JS -->
+                    </div>
+
+                </section>
+
+
+                <!-- ENTWICKLUNGEN -->
+
+                <section class="detail-section">
+
+                    <h3>Entwicklungen</h3>
+
+                    <div id="evolutionChain" class="evolution-chain">
+                        <!-- JS -->
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+
+        <button class="pokemon-navigation next" id="nextPokemon">
+            →
+        </button>
+
+    </dialog>
+
 </body>
+
 </html>

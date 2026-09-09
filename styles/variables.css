@@ -1,0 +1,8 @@
+:root {
+    --accent-color-100: rgba(245, 50, 65, 1.0);
+    --primary-color-100: rgba(0,35,70,1);
+    --primary-color-50: rgba(0,35,70,0.5);
+    --primary-color-20: rgba(0,35,70,0.2);
+    --primary-color-10: rgba(0,35,70,0.1);
+
+}

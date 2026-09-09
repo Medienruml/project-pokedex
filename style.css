@@ -1,0 +1,184 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100dvh;
+}
+
+header {
+    width: 100%;
+    height: 72px;
+    background-color: rgb(248, 248, 248);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+header img {
+    width: 48px;
+    height: 48px;
+    animation: rotate360 5s linear infinite;
+}
+
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 240px;
+    background-image: url(./assets/images/hero-image.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hero-container {
+    position: absolute;
+    top: 104px;
+}
+
+.hero-container h2, .hero-container p {
+    text-shadow: 0 0 5px white;
+    text-align: center;
+}
+
+.search-section {
+    position: relative;
+    height: 80px;
+    top: -40px;
+    background-color: white;
+    width: 100%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -25px;
+    width: 100%;
+    z-index: 5;
+}
+
+.search-container input[type="text"] {
+    position: relative;
+    left: 24px;
+    width: min(800px, 100%);
+    height: 56px;
+    padding-left: 64px;
+    border: unset;
+    border-radius: 999px;
+    box-shadow: 0 5px 8px var(--primary-color-50);
+
+    background-image: url(./assets/icons/icon-search.svg);
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: 12px center;
+
+    font: 400 1rem/1.2 "Roboto";
+
+    z-index: 5;
+}
+
+.search-container button {
+    position:relative;
+    right: 28px;
+    width: 48px;
+    height: 48px;
+    background-color: var(--accent-color-100);
+    border-radius: 999px;
+    border: unset;
+    box-shadow: 0 5px 8px var(--primary-color-50);
+
+    background-image: url(./assets/icons/icon-search-white.svg);
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: center center;
+
+    flex-shrink: 0;
+
+    z-index: 10;
+}
+
+.controls-container {
+    position: relative;
+    width: 100%;
+    margin-top: -64px;
+    z-index: 15;
+}
+
+.controls-container button {
+    padding: 8px 16px;
+    background-color: var(--primary-color-10);
+    border-radius: 999px;
+    border: unset;
+
+    font: 700 0.8rem1.2 "Roboto";
+}
+
+.controls-container .type-filter {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.controls-container .list-options {
+    padding: 24px 0;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controls-container .list-options p, .controls-container .list-options span {
+    font: 400 0.8rem1.2 "Roboto";
+}
+
+.controls-container .list-options select {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--primary-color-20);
+    font: 700 0.8rem/1.2 "Roboto";
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+main .load-more-btn {
+    padding: 16px 24px;
+    background-color: var(--accent-color-100);
+    color: white;
+    font: 700 0.9rem/1.2 "Roboto";
+    border-radius: 999px;
+    border: unset
+}
+
+footer {
+    flex-shrink: 0;
+    height: 72px;
+    background-color: var(--primary-color-10);
+}
+
+footer img {
+    width: 24px;
+    height: 24px;
+    animation: rotate360 5s linear infinite;
+}
