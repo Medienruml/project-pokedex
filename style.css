@@ -172,9 +172,20 @@ main .load-more-btn {
 }
 
 footer {
+    display:flex;
+    justify-content: start;
+    align-items: center;
+    gap: 32px;
     flex-shrink: 0;
     height: 72px;
     background-color: var(--primary-color-10);
+}
+
+footer .logo {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 8px;
 }
 
 footer img {

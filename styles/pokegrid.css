@@ -1,7 +1,8 @@
 .pokemon-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px 24px;
+    gap: 40px 40px;
+    padding: 40px 0;
 }
 
 .pokemon-grid article {
@@ -16,12 +17,30 @@
     background-color: white;
     box-shadow: 0 0 16px var(--primary-color-20);
     border-radius: 8px;
+    border-top-left-radius: 100% 20%;
+    border-top-right-radius: 100% 20%;
+    border-bottom-left-radius: 100% 20%;
+    border-bottom-right-radius: 100% 20%;
+}
+
+.pokemon-grid article:hover {
+    cursor: pointer;
 }
 
 .pokemon-grid article .poke-image {
-    width: 80px;
-    height: 80px;
+    position: relative;
+    top: -32px;
+    width: 96px;
+    height: 96px;
     object-fit: contain;
+    margin-bottom: -32px;
+    transition: all 250ms ease-in-out;
+}
+
+.pokemon-grid article:hover .poke-image {
+    transform: scale(1.3);
+    filter: drop-shadow( 0 5px 8px var(--primary-color-50));
+    transition: all 250ms ease-in-out;
 }
 
 .pokemon-grid article .poke-name {

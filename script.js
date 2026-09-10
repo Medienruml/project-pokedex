@@ -16,12 +16,15 @@ async function loadPokemon() {
         let pokeResponseToJson = await pokeResponse.json();
         console.log(pokeResponseToJson);
         
-        let pokeImgSrc = await pokeResponseToJson.sprites.other.dream_world.front_default;
-        console.log(pokeImgSrc);
+        let pokeImgSrc = await pokeResponseToJson.sprites.other["official-artwork"].front_default || pokeResponseToJson.sprites.other.dream_world.front_default;
         
         let pokeNumber = await Number(pokeUrl.split("/").filter(Boolean).pop());
         let pokeName = await pokemon.name;
         pokeGridElement.innerHTML += getPokemonCardTemplate(pokeImgSrc, pokeName, pokeNumber);
     });;
        
+}
+
+async function showPokemon() {
+
 }
