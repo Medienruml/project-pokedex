@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/standards.css">
     <link rel="stylesheet" href="./styles/pokegrid.css">
+    <link rel="stylesheet" href="./styles/dialog.css">
     <link rel="stylesheet" href="style.css">
 
     <script src="./scripts/templates.js"></script>
@@ -34,11 +35,7 @@
     </section>
     <section class="search-section wrapper">
         <div class="search-container">
-            <input 
-                type="text" 
-                name="search-bar" 
-                id=""
-                data-id="search-input"
+            <input type="text" name="search-bar" id="" data-id="search-input"
                 placeholder="Find your Pokémon (Pikachu, 25 or type electro ...)">
             <button></button>
         </div>
@@ -48,15 +45,24 @@
         <div class="type-filter" id="typeFilter">
 
             <button class="active">Alle</button>
-            <button>Normal</button>
-            <button>Feuer</button>
-            <button>Wasser</button>
-            <button>Pflanze</button>
-            <button>Elektro</button>
-            <button>Eis</button>
-            <button>Kampf</button>
-            <button>Gift</button>
-            <button>Boden</button>
+            <button class="type-normal">normal</button>
+            <button class="type-fire">fire</button>
+            <button class="type-water">water</button>
+            <button class="type-grass">grass</button>
+            <button class="type-electric">electric</button>
+            <button class="type-ice">ice</button>
+            <button class="type-fighting">fighting</button>
+            <button class="type-poison">poison</button>
+            <button class="type-ground">ground</button>
+            <button class="type-flying">flying</button>
+            <button class="type-psychic">psychic</button>
+            <button class="type-bug">bug</button>
+            <button class="type-rock">rock</button>
+            <button class="type-ghost">ghost</button>
+            <button class="type-dragon">dragon</button>
+            <button class="type-dark">dark</button>
+            <button class="type-steel">steel</button>
+            <button class="type-fairy">fairy</button>
 
         </div>
 
@@ -84,7 +90,7 @@
     <main class="wrapper" data-id="content">
         <div class="pokemon-grid" id="pokemonGrid">
         </div>
-        <button data-id="load-more-button" class="load-more-btn" id="loadMoreButton">
+        <button onclick="loadPokemon()" data-id="load-more-button" class="load-more-btn" id="loadMoreButton">
             + 30 weitere Pokémon laden
         </button>
     </main>
@@ -103,147 +109,7 @@
 
     </footer>
 
-
-
-
-
-    <!-- DETAIL DIALOG -->
-
-    <dialog id="pokemonDialog">
-
-        <button class="dialog-close" id="closeDialog">
-            ×
-        </button>
-
-
-        <button class="pokemon-navigation previous" id="previousPokemon">
-            ←
-        </button>
-
-
-        <div class="pokemon-details">
-
-            <div class="details-image">
-
-                <img id="detailImage" src="" alt="">
-
-            </div>
-
-
-            <div class="details-content">
-
-                <span id="detailNumber">
-                    #025
-                </span>
-
-                <h2 id="detailName">
-                    Pikachu
-                </h2>
-
-                <div id="detailTypes">
-                    <!-- Typen -->
-                </div>
-
-
-                <div class="basic-info">
-
-                    <div>
-                        <span>Größe</span>
-                        <strong id="detailHeight">
-                            0,4 m
-                        </strong>
-                    </div>
-
-                    <div>
-                        <span>Gewicht</span>
-                        <strong id="detailWeight">
-                            6,0 kg
-                        </strong>
-                    </div>
-
-                </div>
-
-
-                <!-- TABS -->
-
-                <div class="detail-tabs">
-
-                    <button class="active">
-                        Übersicht
-                    </button>
-
-                    <button>
-                        Statuswerte
-                    </button>
-
-                    <button>
-                        Entwicklungen
-                    </button>
-
-                </div>
-
-
-                <!-- BESCHREIBUNG -->
-
-                <section class="detail-section">
-
-                    <h3>Beschreibung</h3>
-
-                    <p id="detailDescription">
-                        ...
-                    </p>
-
-                </section>
-
-
-                <!-- FÄHIGKEITEN -->
-
-                <section class="detail-section">
-
-                    <h3>Fähigkeiten</h3>
-
-                    <ul id="detailAbilities">
-                        <!-- JS -->
-                    </ul>
-
-                </section>
-
-
-                <!-- STATUSWERTE -->
-
-                <section class="detail-section">
-
-                    <h3>Statuswerte</h3>
-
-                    <div id="detailStats" class="stats">
-                        <!-- JS -->
-                    </div>
-
-                </section>
-
-
-                <!-- ENTWICKLUNGEN -->
-
-                <section class="detail-section">
-
-                    <h3>Entwicklungen</h3>
-
-                    <div id="evolutionChain" class="evolution-chain">
-                        <!-- JS -->
-                    </div>
-
-                </section>
-
-            </div>
-
-        </div>
-
-
-        <button class="pokemon-navigation next" id="nextPokemon">
-            →
-        </button>
-
-    </dialog>
+    <dialog class="" id="pokemonDialog"></dialog>
 
 </body>
 

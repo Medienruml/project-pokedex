@@ -1,8 +1,81 @@
 :root {
     --accent-color-100: rgba(245, 50, 65, 1.0);
-    --primary-color-100: rgba(0,35,70,1);
-    --primary-color-50: rgba(0,35,70,0.5);
-    --primary-color-20: rgba(0,35,70,0.2);
-    --primary-color-10: rgba(0,35,70,0.1);
+
+    --primary-color-100: rgb(0, 50, 100, 1);
+    --primary-color-50: rgba(0, 50, 100, 0.5);
+    --primary-color-20: rgba(0, 50, 100, 0.2);
+    --primary-color-10: rgba(0, 50, 100, 0.1);
+
+        /* Normal */
+    --type-normal-100: rgba(173, 165, 148, 1);
+    --type-normal-20: rgba(173, 165, 148, 0.2);
+
+    /* Fire */
+    --type-fire-100: rgba(247, 82, 49, 1);
+    --type-fire-20: rgba(247, 82, 49, 0.2);
+
+    /* Water */
+    --type-water-100: rgba(57, 156, 255, 1);
+    --type-water-20: rgba(57, 156, 255, 0.2);
+
+    /* Electric */
+    --type-electric-100: rgba(255, 198, 49, 1);
+    --type-electric-20: rgba(255, 198, 49, 0.2);
+
+    /* Grass */
+    --type-grass-100: rgba(123, 206, 82, 1);
+    --type-grass-20: rgba(123, 206, 82, 0.2);
+
+    /* Ice */
+    --type-ice-100: rgba(90, 206, 231, 1);
+    --type-ice-20: rgba(90, 206, 231, 0.2);
+
+    /* Fighting */
+    --type-fighting-100: rgba(165, 82, 57, 1);
+    --type-fighting-20: rgba(165, 82, 57, 0.2);
+
+    /* Poison */
+    --type-poison-100: rgba(181, 90, 165, 1);
+    --type-poison-20: rgba(181, 90, 165, 0.2);
+
+    /* Ground */
+    --type-ground-100: rgba(214, 181, 90, 1);
+    --type-ground-20: rgba(214, 181, 90, 0.2);
+
+    /* Flying */
+    --type-flying-100: rgba(156, 173, 247, 1);
+    --type-flying-20: rgba(156, 173, 247, 0.2);
+
+    /* Psychic */
+    --type-psychic-100: rgba(255, 115, 165, 1);
+    --type-psychic-20: rgba(255, 115, 165, 0.2);
+
+    /* Bug */
+    --type-bug-100: rgba(173, 189, 33, 1);
+    --type-bug-20: rgba(173, 189, 33, 0.2);
+
+    /* Rock */
+    --type-rock-100: rgba(189, 165, 90, 1);
+    --type-rock-20: rgba(189, 165, 90, 0.2);
+
+    /* Ghost */
+    --type-ghost-100: rgba(99, 99, 181, 1);
+    --type-ghost-20: rgba(99, 99, 181, 0.2);
+
+    /* Dragon */
+    --type-dragon-100: rgba(123, 99, 231, 1);
+    --type-dragon-20: rgba(123, 99, 231, 0.2);
+
+    /* Dark */
+    --type-dark-100: rgba(115, 90, 74, 1);
+    --type-dark-20: rgba(115, 90, 74, 0.2);
+
+    /* Steel */
+    --type-steel-100: rgba(173, 173, 198, 1);
+    --type-steel-20: rgba(173, 173, 198, 0.2);
+
+    /* Fairy */
+    --type-fairy-100: rgba(230, 165, 230, 1);
+    --type-fairy-20: rgba(230, 165, 230, 0.2);
 
 }

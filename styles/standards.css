@@ -7,7 +7,7 @@
 }
 
 body {
-    color: var(--font-color-100);
+    color: var(--primary-color-100);
 }
 
 .wrapper {
@@ -20,4 +20,168 @@ h1 {
 
 h2 {
     font: 700 1.8rem "Roboto";
+}
+
+
+/* Type-colors */
+
+.type-normal {
+    background-color: var(--type-normal-100);
+}
+
+.type-normal-light {
+    background-color: var(--type-normal-20);
+}
+
+
+.type-fire {
+    background-color: var(--type-fire-100);
+}
+
+.type-fire-light {
+    background-color: var(--type-fire-20);
+}
+
+
+.type-water {
+    background-color: var(--type-water-100);
+}
+
+.type-water-light {
+    background-color: var(--type-water-20);
+}
+
+
+.type-electric {
+    background-color: var(--type-electric-100);
+}
+
+.type-electric-light {
+    background-color: var(--type-electric-20);
+}
+
+
+.type-grass {
+    background-color: var(--type-grass-100);
+}
+
+.type-grass-light {
+    background-color: var(--type-grass-20);
+}
+
+
+.type-ice {
+    background-color: var(--type-ice-100);
+}
+
+.type-ice-light {
+    background-color: var(--type-ice-20);
+}
+
+
+.type-fighting {
+    background-color: var(--type-fighting-100);
+}
+
+.type-fighting-light {
+    background-color: var(--type-fighting-20);
+}
+
+
+.type-poison {
+    background-color: var(--type-poison-100);
+}
+
+.type-poison-light {
+    background-color: var(--type-poison-20);
+}
+
+
+.type-ground {
+    background-color: var(--type-ground-100);
+}
+
+.type-ground-light {
+    background-color: var(--type-ground-20);
+}
+
+
+.type-flying {
+    background-color: var(--type-flying-100);
+}
+
+.type-flying-light {
+    background-color: var(--type-flying-20);
+}
+
+
+.type-psychic {
+    background-color: var(--type-psychic-100);
+}
+
+.type-psychic-light {
+    background-color: var(--type-psychic-20);
+}
+
+
+.type-bug {
+    background-color: var(--type-bug-100);
+}
+
+.type-bug-light {
+    background-color: var(--type-bug-20);
+}
+
+
+.type-rock {
+    background-color: var(--type-rock-100);
+}
+
+.type-rock-light {
+    background-color: var(--type-rock-20);
+}
+
+
+.type-ghost {
+    background-color: var(--type-ghost-100);
+}
+
+.type-ghost-light {
+    background-color: var(--type-ghost-20);
+}
+
+
+.type-dragon {
+    background-color: var(--type-dragon-100);
+}
+
+.type-dragon-light {
+    background-color: var(--type-dragon-20);
+}
+
+
+.type-dark {
+    background-color: var(--type-dark-100);
+}
+
+.type-dark-light {
+    background-color: var(--type-dark-20);
+}
+
+
+.type-steel {
+    background-color: var(--type-steel-100);
+}
+
+.type-steel-light {
+    background-color: var(--type-steel-20);
+}
+
+
+.type-fairy {
+    background-color: var(--type-fairy-100);
+}
+
+.type-fairy-light {
+    background-color: var(--type-fairy-20);
 }

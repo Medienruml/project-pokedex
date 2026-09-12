@@ -1,0 +1,87 @@
+dialog {
+    position: relative;
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 800px;
+    height: 400px;
+
+    background-color: white;
+
+    border-top-left-radius: 100% 20%;
+    border-top-right-radius: 100% 20%;
+    border-bottom-left-radius: 100% 20%;
+    border-bottom-right-radius: 100% 20%;
+    border: unset;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(16px);
+}
+
+dialog button.dialog-close {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-color-100);
+    background-image: url("../assets/icons/icon-close.svg");
+    background-position: center center;
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    border-radius: 999px;
+    border: unset;
+    box-shadow: 0 5px 8px var(--primary-color-50);
+    z-index: 20;
+}
+
+dialog .pokemon-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+dialog .details-image img{
+    filter: saturate(1.4);
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+
+}
+
+dialog #detailNumber {
+    font: 900 1.3em/1.2 "Roboto";
+}
+
+dialog #detailName {
+    font: 900 2rem/1.2 "Roboto";
+    text-transform: capitalize;
+}
+
+dialog .basic-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 8px;
+}
+
+dialog .basic-info div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    padding: 8px;
+    background-color: var(--primary-color-20);
+    border-radius: 8px;
+}
+
+dialog .basic-info div p {
+    font: 900 1.2rem/1.2 "Roboto";
+}
