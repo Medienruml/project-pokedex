@@ -1,5 +1,5 @@
 function getPokemonCardTemplate(src, name, number) {
-    return  `
+    return `
         <article data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)">
             <img class="poke-image" src="${src}" alt="" />
             <p class="poke-number">#${number}</p>
@@ -11,123 +11,89 @@ function getPokemonCardTemplate(src, name, number) {
     `;
 }
 
-function getPokemonDialog(pokedata) {
+async function getPokemonDialogTemplate(pokedata) {
+    let pokeTypesHtml = await showPokeTypes(pokedata);
+
+    let pokeAbilitiesHtml = await showAbilities(pokedata);
+
+    let pokeNameGerman = await getTranscription(BASE_URL + "pokemon-species/" + pokedata.id, "de");
+    let pokeNameJapanese = await getTranscription(BASE_URL + "pokemon-species/" + pokedata.id, "ja")
+
+    let pokeFlavorTextHtml = await showFlavorText(pokedata);
+
+    let pokeStatsHtml = await showPokeStats(pokedata);
+
+    let pokeEvoChainHtml = await showPokeEvoChain(pokedata);
+
     return `
-        <button onclick="closeDialog()" class="dialog-close" id="closeDialog">
-            ×
-        </button>
+        <button onclick="closeDialogBtn()" class="dialog-close" id="closeDialog"></button>
 
-
-        <button class="pokemon-navigation previous" id="previousPokemon">
-            ←
-        </button>
-
+        <button class="pokemon-navigation previous" id="previousPokemon"></button>
 
         <div class="pokemon-details">
-            <div class="details-image">
-                <img id="detailImage" src="${pokedata.sprites.other["official-artwork"].front_default || pokedata.sprites.other.dream_world.front_default}" alt="">
-            </div>
-
-            <div class="details-content">
-                <span id="detailNumber">#${pokedata.id}</span>
-                <h2 id="detailName">${pokedata.name}</h2>
-
-                <div id="detailTypes">
-                    <!-- Typen -->
+            <section class="details-content-1">
+                <div>
+                    <span id="detailNumber">#${pokedata.id}</span>
+                    <h2 id="detailName">${pokeNameGerman}</h2>
+                    <p>${pokeNameJapanese}</p>
                 </div>
 
+                <div id="detailTypes">${pokeTypesHtml}</div>
 
                 <div class="basic-info">
                     <div>
-                        <p>Height</p>
-                        <p id="detailHeight">${(pokedata.height)/10}m</p>
+                        <p>Größe:</p>
+                        <p id="detailHeight">${(pokedata.height) / 10}m</p>
                     </div>
 
                     <div>
-                        <p>Gewicht</p>
-                        <p id="detailWeight">${(pokedata.weight)/10}kg</p>
+                        <p>Gewicht:</p>
+                        <p id="detailWeight">${(pokedata.weight) / 10}kg</p>
                     </div>
 
                 </div>
 
-
-                <!-- TABS -->
-
-                <div class="detail-tabs">
-
-                    <button class="active">
-                        Übersicht
-                    </button>
-
-                    <button>
-                        Statuswerte
-                    </button>
-
-                    <button>
-                        Entwicklungen
-                    </button>
-
-                </div>
-
-
-                <!-- BESCHREIBUNG -->
-
-                <section class="detail-section">
-
-                    <h3>Beschreibung</h3>
-
-                    <p id="detailDescription">
-                        ...
-                    </p>
-
-                </section>
-
-
-                <!-- FÄHIGKEITEN -->
-
-                <section class="detail-section">
-
+                <div class="abilities">
                     <h3>Fähigkeiten</h3>
 
                     <ul id="detailAbilities">
-                        <!-- JS -->
+                        ${pokeAbilitiesHtml}
                     </ul>
+                </div>
+            </section>
 
-                </section>
-
-
-                <!-- STATUSWERTE -->
-
-                <section class="detail-section">
-
-                    <h3>Statuswerte</h3>
-
-                    <div id="detailStats" class="stats">
-                        <!-- JS -->
-                    </div>
-
-                </section>
-
-
-                <!-- ENTWICKLUNGEN -->
-
-                <section class="detail-section">
+            <section class="details-content-2">
+                <img id="detailImage" src="${pokedata.sprites.other["official-artwork"].front_default || pokedata.sprites.other.dream_world.front_default}" alt="">
+                <div class="evolution-section">
 
                     <h3>Entwicklungen</h3>
 
                     <div id="evolutionChain" class="evolution-chain">
-                        <!-- JS -->
+                        ${pokeEvoChainHtml}
                     </div>
 
-                </section>
+                </div>
+            </section>
 
-            </div>
+            <section class="details-content-3">
+                <div class="description-section">
+                    <h3>Beschreibung</h3>
+                    ${pokeFlavorTextHtml}
+                </div>
+
+                <div class="stats-section">
+                    <h3>Statuswerte</h3>
+                    <div id="detailStats" class="stats">
+                        <table>
+                            ${pokeStatsHtml}
+                        </table>
+                    </div>
+                </div>
+            </section>
 
         </div>
 
 
-        <button class="pokemon-navigation next" id="nextPokemon">
-            →
-        </button>
+        <button class="pokemon-navigation next" id="nextPokemon"></button>
     `;
 }

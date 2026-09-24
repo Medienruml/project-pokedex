@@ -2,14 +2,92 @@ dialog {
     position: relative;
 }
 
+dialog:focus {
+    border: unset;
+}
+
 dialog {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: unset;
+}
 
-    width: 800px;
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(16px);
+}
+
+dialog button.dialog-close {
+    position: absolute;
+    right: 24px;
+    top: 0;
+    width: 56px;
+    height: 56px;
+    background-color: var(--accent-color-100);
+    background-image: url("../assets/icons/icon-close-white.svg");
+    background-position: center center;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    border-radius: 999px;
+    border: unset;
+    box-shadow: 0 5px 8px var(--primary-color-50);
+    z-index: 20;
+}
+
+dialog button.dialog-close:hover {
+    cursor: pointer;
+}
+
+dialog button.pokemon-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    background-image: url("../assets/icons/icon-arrow-left.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+
+    border-radius: 999px;
+    border: unset;
+    box-shadow: 0 3px 5px var(--primary-color-20);
+
+    transition: all 250ms ease-in-out;
+
+    z-index: 20;
+}
+
+dialog button.pokemon-navigation:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 8px var(--primary-color-20);
+    transform: translateY(-50%) scale(1.2);
+    transition: all 250ms ease-in-out;
+}
+
+dialog button.previous {
+    left: 16px;
+}
+
+dialog button.next {
+    right: 16px;
+    background-image: url("../assets/icons/icon-arrow-right.svg");
+}
+
+dialog .pokemon-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+
+    width: 1200px;
     height: 400px;
+    padding: 40px 0; 
 
     background-color: white;
 
@@ -20,50 +98,22 @@ dialog {
     border: unset;
 }
 
-dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(16px);
+dialog .pokemon-details section.details-content-2 {
+    
 }
 
-dialog button.dialog-close {
-    width: 40px;
-    height: 40px;
-    background-color: var(--accent-color-100);
-    background-image: url("../assets/icons/icon-close.svg");
-    background-position: center center;
-    background-size: 16px 16px;
-    background-repeat: no-repeat;
-    border-radius: 999px;
-    border: unset;
-    box-shadow: 0 5px 8px var(--primary-color-50);
-    z-index: 20;
+dialog .pokemon-details section.details-content-3 {
+    width: 25%;
 }
 
-dialog .pokemon-details {
+
+dialog .details-content-1 {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 16px;
 }
 
-dialog .details-image img{
-    filter: saturate(1.4);
-    width: 320px;
-    height: 320px;
-    object-fit: cover;
-
-}
-
-dialog #detailNumber {
-    font: 900 1.3em/1.2 "Roboto";
-}
-
-dialog #detailName {
-    font: 900 2rem/1.2 "Roboto";
-    text-transform: capitalize;
-}
-
-dialog .basic-info {
+dialog .details-content-1 .basic-info {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -71,17 +121,191 @@ dialog .basic-info {
     gap: 8px;
 }
 
-dialog .basic-info div {
+dialog .details-content-1 .basic-info div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 2px;
 
     padding: 8px;
-    background-color: var(--primary-color-20);
+    background-color: var(--primary-color-10);
     border-radius: 8px;
 }
 
-dialog .basic-info div p {
-    font: 900 1.2rem/1.2 "Roboto";
+dialog .details-content-1 .basic-info div p {
+    font: 900 0.8rem/1.2 "Roboto";
+}
+
+dialog .details-content-1 .basic-info div {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+
+dialog .details-content-2 > img{
+    position: relative;
+    filter: saturate(1.4);
+    width: 224px;
+    height: 224px;
+    object-fit: cover;
+}
+
+dialog .details-content-2 .evolution-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+dialog .details-content-2 .evolution-chain {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 4px;
+}
+
+dialog .details-content-2 .evolution-chain img {
+   width: 56px;
+   height: 56px;
+}
+
+dialog .details-content-2 .evolution-chain img.arrow {
+   width: 16px;
+   height: 16px;
+}
+
+
+
+dialog .details-content-3 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+dialog #detailNumber {
+    font: 900 1.3em/1 "Roboto";
+}
+
+dialog #detailName {
+    font: 900 2rem/1 "Roboto";
+    text-transform: capitalize;
+}
+
+dialog #detailTypes {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 8px;
+}
+
+dialog #detailTypes p {
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-align: center;
+    color: white;
+    font: 700 0.8rem/1.2 "Roboto";
+}
+
+dialog .abilities ul {
+    list-style-position: inside;
+}
+
+dialog .description-section {
+    background-color: var(--primary-color-5);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+dialog .stats-section {
+    background-color: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 0 16px var(--primary-color-10);
+}
+
+dialog .stats-section table {
+    width: 100%;
+}
+
+dialog .stats-section progress {
+    height: 14px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    
+    border: none;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+dialog .stats-section progress::-webkit-progress-bar {
+    background-color: var(--primary-color-10);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-hp::-webkit-progress-value{
+    background-color: var(--type-fire-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-hp::-moz-progress-bar {
+    background-color: var(--type-fire-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-attack::-webkit-progress-value{
+    background-color: var(--type-electric-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-attack::-moz-progress-bar {
+    background-color: var(--type-electric-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-defense::-webkit-progress-value{
+    background-color: var(--type-grass-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-defense::-moz-progress-bar {
+    background-color: var(--type-grass-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-special-attack::-webkit-progress-value{
+    background-color: var(--type-ice-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-special-attack::-moz-progress-bar {
+    background-color: var(--type-ice-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-special-defense::-webkit-progress-value{
+    background-color: var(--type-water-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-special-defense::-moz-progress-bar {
+    background-color: var(--type-water-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-speed::-webkit-progress-value{
+    background-color: var(--type-dragon-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section progress.stat-speed::-moz-progress-bar {
+    background-color: var(--type-dragon-100);
+    border-radius: 999px;
+}
+
+dialog .stats-section .stat-value {
+    font: 800 1rem/1.2 "Roboto";
+    text-align: right;
 }
