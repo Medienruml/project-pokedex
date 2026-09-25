@@ -1,6 +1,6 @@
 const BASE_URL = "https://pokeapi.co/api/v2/"
 
-let limit = 30;
+let limit = 150;
 let offset = 0;
 
 function init() {
@@ -31,7 +31,6 @@ async function showPokemonCards(pokeGridContainer, pokemonsResponseToJson,) {
         let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
         pokeGridContainer.innerHTML += getPokemonCardTemplate(pokeImgSrc, pokeNameGerman, pokeNumber);
 
-
         let typesContainer = document.getElementById("poke-types-" + pokeNumber);
         typesContainer.innerHTML += await showPokeTypes(pokemonResponseToJson);
     };
@@ -41,11 +40,11 @@ async function openDialog(event) {
     let pokeDialog = document.getElementById("pokemonDialog");
     pokeDialog.showModal();
 
-    let pokemonNumber = event.currentTarget.dataset.pokenumber;
-    let pokemonResponse = await fetch(BASE_URL + "pokemon/" + pokemonNumber);
-    let pokemonResponseToJson = await pokemonResponse.json();
+    let pokeNumber = Number(event.currentTarget.dataset.pokenumber);
+    let pokemonResponseToJson = await getPokemonObj(pokeNumber);
+    let pokemonSpeciesResponseToJson = await getPokemonSpeciesObj(pokeNumber);
 
-    pokeDialog.innerHTML = await getPokemonDialogTemplate(pokemonResponseToJson);
+    pokeDialog.innerHTML = await getPokemonDialogTemplate(pokemonResponseToJson, pokemonSpeciesResponseToJson);
 }
 
 function closeDialogBtn() {
@@ -103,7 +102,7 @@ async function showAbilities(pokedata) {
 async function showFlavorText(pokedata) {
     let html = "";
     let pokeNumber = pokedata.id;
-    let pokeSpeciesToJson = await getPokemonSpecies(pokeNumber);
+    let pokeSpeciesToJson = await getPokemonSpeciesObj(pokeNumber);
 
     let germanFlavorObject = pokeSpeciesToJson.flavor_text_entries.find(flavorText => flavorText.language.name == "de");
     let germanFlavorText = germanFlavorObject.flavor_text;
@@ -126,49 +125,71 @@ async function showPokeStats(pokedata) {
     return html;
 }
 
-async function showPokeEvoChain(pokedata) {
-    let html = "";
-    let pokeNumber = pokedata.id;
-    let pokeEvoChainToJson = await getEvoChain(pokeNumber);
-    let pokeEvoChain = pokeEvoChainToJson.chain;
 
-    let urls = getSpeciesUrls(pokeEvoChain);
-    for ([index, url] of urls.entries()) {
-        let pokemonSpeciesToJson = await getPokemonSpecies(url);
-        let pokemonToJson = await getPokemon(pokemonSpeciesToJson.id);
-        
-        if (index != 0) {
-            html += `
-                <img class="arrow" src="./assets/icons/icon-arrow-line-right.svg" alt="arrow right"/>
-            `;
-        } else {}
-        html += `
-            <img 
-                src="${pokemonToJson.sprites.versions['generation-iv'].platinum.front_default}" 
-                alt="${pokemonToJson.id}_${pokemonToJson.name}"
-            />
-        `;
+function getEvolutionChain(chain) {
+    let evolution = {
+        speciesUrl: chain.species.url,
+        evolvesTo: []
     };
 
-    return html; 
+    for (const nextEvolutionUrl of chain.evolves_to) {
+        evolution.evolvesTo.push(
+            getEvolutionChain(nextEvolutionUrl)
+        )
+    }    
+
+    return evolution;
 }
 
-async function getEvoChain(id) {
-    let pokemonSpeciesToJson = await getPokemonSpecies(id);
-    let pokemonEvolutionChain = await fetch(pokemonSpeciesToJson.evolution_chain.url);
-    let pokemonEvolutionChainToJson = await pokemonEvolutionChain.json();
+async function showPokeEvolutionChain(evolutionChain) {    
+    let html = `<div class="evolution-row">`;
+    let currentChain = evolutionChain;
 
-    return pokemonEvolutionChainToJson;
+    while (currentChain) {
+        let pokemonObj = await getPokemonObjOverPokemonSpeciesUrl(currentChain.speciesUrl);
+
+        html += getPokemonThumbnailTemplate(pokemonObj);
+
+        if (isEvolvesToEmpty(currentChain)) {
+            break
+        };
+
+        html += getRightArrowTemplate();
+
+        if (currentChain.evolvesTo.length > 1) {
+            for (nextEvolution of currentChain.evolvesTo) {
+                let nextPokemonObj = await getPokemonObjOverPokemonSpeciesUrl(nextEvolution.speciesUrl);
+                
+                html += getPokemonThumbnailTemplate(nextPokemonObj);
+            }
+            break;
+        }
+
+        currentChain = currentChain.evolvesTo[0];
+    }
+
+    html += `</div>`;
+
+    return html;
 }
 
-async function getPokemon(id) {
+function isEvolvesToEmpty(current) {
+    return current.evolvesTo.length === 0;
+}
+
+function isEvolvesToGreaterThanOne(current) {
+
+}
+
+
+async function getPokemonObj(id) {
     let pokemon = await fetch(BASE_URL + "pokemon/" + id);
     let pokemonToJson = await pokemon.json();
     
     return pokemonToJson;
 }
 
-async function getPokemonSpecies(value) {
+async function getPokemonSpeciesObj(value) {
     let url; 
 
     if (typeof value === "number") {
@@ -182,12 +203,19 @@ async function getPokemonSpecies(value) {
     return pokemonSpeciesToJson;
 }
 
-function getSpeciesUrls(evolution) {
-    let urls = [evolution.species.url];
+async function getEvolutionChainObj(id) {
+    let pokemonSpeciesToJson = await getPokemonSpeciesObj(id);
+    let pokemonEvolutionChain = await fetch(pokemonSpeciesToJson.evolution_chain.url);
+    let pokemonEvolutionChainToJson = await pokemonEvolutionChain.json();
 
-    evolution.evolves_to.forEach(nextEvolution => {
-        urls.push(...getSpeciesUrls(nextEvolution));
-    });
+    console.log(pokemonEvolutionChainToJson);
+    
+    return pokemonEvolutionChainToJson;
+}
 
-    return urls;
+async function getPokemonObjOverPokemonSpeciesUrl(pokemonSpeciesUrl) {
+    let speciesObj = await getPokemonSpeciesObj(pokemonSpeciesUrl);
+    let pokemonObj = await getPokemonObj(speciesObj.id);
+
+    return pokemonObj;
 }

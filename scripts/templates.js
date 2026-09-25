@@ -11,19 +11,21 @@ function getPokemonCardTemplate(src, name, number) {
     `;
 }
 
-async function getPokemonDialogTemplate(pokedata) {
-    let pokeTypesHtml = await showPokeTypes(pokedata);
+async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
+    let pokeTypesHtml = await showPokeTypes(pokemonObj);
 
-    let pokeAbilitiesHtml = await showAbilities(pokedata);
+    let pokeAbilitiesHtml = await showAbilities(pokemonObj);
 
-    let pokeNameGerman = await getTranscription(BASE_URL + "pokemon-species/" + pokedata.id, "de");
-    let pokeNameJapanese = await getTranscription(BASE_URL + "pokemon-species/" + pokedata.id, "ja")
+    let pokeNameGerman = await getTranscription(BASE_URL + "pokemon-species/" + pokemonObj.id, "de");
+    let pokeNameJapanese = await getTranscription(BASE_URL + "pokemon-species/" + pokemonObj.id, "ja")
 
-    let pokeFlavorTextHtml = await showFlavorText(pokedata);
+    let pokeFlavorTextHtml = await showFlavorText(pokemonObj);
 
-    let pokeStatsHtml = await showPokeStats(pokedata);
+    let pokeStatsHtml = await showPokeStats(pokemonObj);
 
-    let pokeEvoChainHtml = await showPokeEvoChain(pokedata);
+    let evolutionChainObj = await getEvolutionChainObj(pokemonObj.id);
+    let evolutionChain = await getEvolutionChain(evolutionChainObj.chain);
+    let pokeEvoChainHtml = await showPokeEvolutionChain(evolutionChain);
 
     return `
         <button onclick="closeDialogBtn()" class="dialog-close" id="closeDialog"></button>
@@ -32,8 +34,8 @@ async function getPokemonDialogTemplate(pokedata) {
 
         <div class="pokemon-details">
             <section class="details-content-1">
-                <div>
-                    <span id="detailNumber">#${pokedata.id}</span>
+                <div class="number-and-name">
+                    <span id="detailNumber">#${pokemonObj.id}</span>
                     <h2 id="detailName">${pokeNameGerman}</h2>
                     <p>${pokeNameJapanese}</p>
                 </div>
@@ -43,12 +45,12 @@ async function getPokemonDialogTemplate(pokedata) {
                 <div class="basic-info">
                     <div>
                         <p>Größe:</p>
-                        <p id="detailHeight">${(pokedata.height) / 10}m</p>
+                        <p id="detailHeight">${(pokemonObj.height) / 10}m</p>
                     </div>
 
                     <div>
                         <p>Gewicht:</p>
-                        <p id="detailWeight">${(pokedata.weight) / 10}kg</p>
+                        <p id="detailWeight">${(pokemonObj.weight) / 10}kg</p>
                     </div>
 
                 </div>
@@ -63,7 +65,7 @@ async function getPokemonDialogTemplate(pokedata) {
             </section>
 
             <section class="details-content-2">
-                <img id="detailImage" src="${pokedata.sprites.other["official-artwork"].front_default || pokedata.sprites.other.dream_world.front_default}" alt="">
+                <img id="detailImage" src="${pokemonObj.sprites.other["official-artwork"].front_default || pokedata.sprites.other.dream_world.front_default}" alt="">
                 <div class="evolution-section">
 
                     <h3>Entwicklungen</h3>
@@ -93,7 +95,26 @@ async function getPokemonDialogTemplate(pokedata) {
 
         </div>
 
-
         <button class="pokemon-navigation next" id="nextPokemon"></button>
+    `;
+}
+
+
+function getPokemonThumbnailTemplate(pokemonObj) {
+    return `
+        <img 
+            src="${pokemonObj.sprites.front_default}" 
+            alt="${pokemonObj.id}_${pokemonObj.name}"
+        />
+    `;
+}
+
+function getRightArrowTemplate() {
+    return `
+        <img 
+            class="arrow" 
+            src="./assets/icons/icon-arrow-line-right.svg" 
+            alt="arrow right"
+        />
     `;
 }
