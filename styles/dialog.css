@@ -99,24 +99,35 @@ dialog .pokemon-details {
 }
 
 dialog .pokemon-details section.details-content-2 {
-    
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 dialog .pokemon-details section.details-content-3 {
-    width: 25%;
+    width: 280px;
 }
 
 
 dialog .details-content-1 {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 16px;
+}
+
+dialog .details-content-1 .number-and-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 dialog .details-content-1 .basic-info {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     gap: 8px;
 }
@@ -160,10 +171,18 @@ dialog .details-content-2 .evolution-section {
 
 dialog .details-content-2 .evolution-chain {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+dialog .details-content-2 .evolution-chain .evolution-row {
+    width: 280px;
+    display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
-    gap: 4px;
+    gap: 0px;
 }
 
 dialog .details-content-2 .evolution-chain img {
@@ -175,8 +194,6 @@ dialog .details-content-2 .evolution-chain img.arrow {
    width: 16px;
    height: 16px;
 }
-
-
 
 dialog .details-content-3 {
     display: flex;
