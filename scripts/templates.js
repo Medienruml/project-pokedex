@@ -30,7 +30,7 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
     return `
         <button onclick="closeDialogBtn()" class="dialog-close" id="closeDialog"></button>
 
-        <button class="pokemon-navigation previous" id="previousPokemon"></button>
+        <button onclick="showPrevPokemon(${pokemonObj.id})" class="pokemon-navigation previous" id="previousPokemon"></button>
 
         <div class="pokemon-details">
             <section class="details-content-1">
@@ -95,7 +95,7 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
 
         </div>
 
-        <button class="pokemon-navigation next" id="nextPokemon"></button>
+        <button onclick="showNextPokemon(${pokemonObj.id})" class="pokemon-navigation next" id="nextPokemon"></button>
     `;
 }
 
