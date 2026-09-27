@@ -3,32 +3,98 @@ const BASE_URL = "https://pokeapi.co/api/v2/"
 let limit = 30;
 let offset = 0;
 
+let pokemonList = [];
+let sortType = "number-asc";
+
 function init() {
     offset = 0;
     loadPokemon();
+    let loadMorePokemonButton = document.getElementById("loadMorePokemonButton");
+    loadMorePokemonButton.innerHTML = getLoadButtonTemplate(limit);
 }
 
 async function loadPokemon() {
-    let pokeGridContainer = document.getElementById("pokemonGrid");
+    let pokemonCounter = document.getElementById("pokemonCounter");
+    let inputPokemonSort = document.getElementById("sortPokemon");
 
     let pokemonsResponse = await fetch(BASE_URL + `pokemon?limit=${limit}&offset=${offset}`);
     let pokemonsResponseToJson = await pokemonsResponse.json();
 
-    showPokemonCards(pokeGridContainer, pokemonsResponseToJson);
+    
+
+    pokemonList.push(...pokemonsResponseToJson.results);
+
+    for ( pokemon of pokemonList ) {
+        let pokemonResponse = await fetch(pokemon.url);
+        let pokemonResponseToJson = await pokemonResponse.json();
+
+        let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
+
+        pokemon.name = pokeNameGerman;
+    }
+
+    console.log(pokemonList);
+    
+
+    pokemonCounter.innerHTML = getPokemonCounterTemplate(offset + limit);
 
     offset += limit;
+
+    inputPokemonSort.value = "number-asc";
+
+    sortPokemon();
 }
 
-async function showPokemonCards(pokeGridContainer, pokemonsResponseToJson,) {
-    for (let pokemon of pokemonsResponseToJson.results) {
+function sortPokemon(sortType) {
+    let sortedPokemon = [...pokemonList];
+
+
+    switch (sortType) {
+        case "number-asc":
+            sortedPokemon.sort((a, b) => {
+                return getPokemonNumber(a.url) - getPokemonNumber(b.url);
+            });
+            break;
+
+        case "number-desc":
+            sortedPokemon.sort((a, b) => {
+                return getPokemonNumber(b.url) - getPokemonNumber(a.url);
+            });
+            break;
+
+        case "name-asc":
+            sortedPokemon.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
+            break;
+
+        case "name-desc":
+            sortedPokemon.sort((a, b) => {
+                return b.name.localeCompare(a.name);
+            });
+            break;
+    }
+
+    showPokemonCards(sortedPokemon);
+}
+
+function getPokemonNumber(url) {
+    return Number(url.split("/").at(-2));
+}
+
+async function showPokemonCards(pokemonList) {
+    let pokeGridContainer = document.getElementById("pokemonGrid");
+
+    pokeGridContainer.innerHTML = "";
+
+    for (let pokemon of pokemonList) {
         let pokeUrl = pokemon.url;
         let pokemonResponse = await fetch(pokeUrl);
         let pokemonResponseToJson = await pokemonResponse.json();
 
         let pokeImgSrc = pokemonResponseToJson.sprites.other["official-artwork"].front_default || pokeResponseToJson.sprites.other.dream_world.front_default;
         let pokeNumber = pokemonResponseToJson.id;
-        let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
-        pokeGridContainer.innerHTML += getPokemonCardTemplate(pokeImgSrc, pokeNameGerman, pokeNumber);
+        pokeGridContainer.innerHTML += getPokemonCardTemplate(pokeImgSrc, pokemon.name, pokeNumber);
 
         let typesContainer = document.getElementById("poke-types-" + pokeNumber);
         typesContainer.innerHTML += await showPokeTypes(pokemonResponseToJson);
@@ -124,7 +190,14 @@ async function showPokeStats(pokedata) {
 
     for (let index = 0; index < pokeStats.length; index++) {
         let stat = pokeStats[index];
-        html += `<tr> <td class="stat-name">${statsGermanNames[index]}</td><td><progress class='stat-${stat.stat.name}' value='${stat.base_stat}' max='255'>${stat.base_stat}</progress></td><td class="stat-value">${stat.base_stat}</td> </tr>`;
+        html += `
+            <tr> 
+                <td class="stat-name">${statsGermanNames[index]}</td>
+                <td><progress class='stat-${stat.stat.name}' value='${stat.base_stat}' max='255'>${stat.base_stat}</progress></td>
+                <td class="stat-value">${stat.base_stat}</td> 
+            </tr>
+            
+        `;
     }
     
     return html;

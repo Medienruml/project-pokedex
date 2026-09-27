@@ -118,3 +118,15 @@ function getRightArrowTemplate() {
         />
     `;
 }
+
+function getLoadButtonTemplate(limit) {
+    return `
+        + <span>${limit}</span> weitere Pokémon laden
+    `;
+}
+
+function getPokemonCounterTemplate(pokemonCount) {
+    return `
+        <span>${pokemonCount}</span> von <span>1.025</span> Pokémon angezeigt
+    `;
+}

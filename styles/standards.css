@@ -11,15 +11,15 @@ body {
 }
 
 .wrapper {
-    padding: 0 max(120px, calc(50% - 720px));
+    padding: 0 max(clamp(16px, calc(-18.667px + 9.63vw), 120px), calc(50% - 720px));
 }
 
 h1 {
-    font: 900 2.5rem "Roboto";
+    font: 900 2.5rem/1.2 "Roboto";
 }
 
 h2 {
-    font: 700 1.8rem "Roboto";
+    font: 700 2rem/1.2 "Roboto";
 }
 
 h3 {

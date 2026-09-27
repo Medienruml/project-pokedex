@@ -21,14 +21,14 @@
 
 <body onload="init()">
     <header class="wrapper">
-        <img src="./assets/icons/Poké_Ball_icon.svg" alt="Icon Pok´ball">
+        <img src="./assets/icons/Poké_Ball_icon.svg" alt="Icon Pokéball">
         <h1>Pokédex</h1>
 
     </header>
     <section class="hero-section wrapper">
         <div class="hero-container">
-            <h2>Discover the world of Pokémon</h2>
-            <p>Search, find out more and expand your knowledge <br>of your favourite Pokémon</p>
+            <h2>Entdecke die Welt der Pokémon</h2>
+            <p>Suche, informiere dich und erweitere dein Wissen <br>über deine Lieblings-Pokémon</p>
         </div>
 
 
@@ -42,7 +42,7 @@
     </section>
     <section class="controls-container wrapper">
 
-        <div class="type-filter" id="typeFilter">
+        <!-- <div class="type-filter" id="typeFilter">
 
             <button class="active">Alle</button>
             <button class="type-normal">normal</button>
@@ -64,7 +64,7 @@
             <button class="type-steel">steel</button>
             <button class="type-fairy">fairy</button>
 
-        </div>
+        </div> -->
 
         <div class="list-options">
 
@@ -72,15 +72,18 @@
                 <span>30</span> von <span>1.025</span> Pokémon angezeigt
             </p>
 
-            <select id="sortPokemon">
-                <option value="number">
+            <select id="sortPokemon" onchange="sortPokemon(this.value)">
+                <option value="number-asc">
                     Nummer (aufsteigend)
                 </option>
-                <option value="number">
+                <option value="number-desc">
                     Nummer (absteigend)
                 </option>
-                <option value="name">
+                <option value="name-asc">
                     Name (A-Z)
+                </option>
+                <option value="name-desc">
+                    Name (Z-A)
                 </option>
             </select>
 
@@ -90,8 +93,8 @@
     <main class="wrapper" data-id="content">
         <div class="pokemon-grid" id="pokemonGrid">
         </div>
-        <button onclick="loadPokemon()" data-id="load-more-button" class="load-more-btn" id="loadMoreButton">
-            + 30 weitere Pokémon laden
+        <button onclick="loadPokemon()" data-id="load-more-button" class="load-more-btn" id="loadMorePokemonButton">
+            + <span>30</span> weitere Pokémon laden
         </button>
     </main>
     <footer class="footer wrapper">

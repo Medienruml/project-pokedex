@@ -53,6 +53,10 @@ header img {
     text-align: center;
 }
 
+.hero-container p {
+    font: 400 1.2rem/1.2 "Roboto"; 
+}
+
 .search-section {
     position: relative;
     height: 80px;
