@@ -35,9 +35,9 @@
     </section>
     <section class="search-section wrapper">
         <div class="search-container">
-            <input type="text" name="search-bar" id="" data-id="search-input"
-                placeholder="Find your Pokémon (Pikachu, 25 or type electro ...)">
-            <button></button>
+            <input onkeydown="if (event.key === 'Enter') searchPokemonList()" type="text" name="search-bar" id="searchPokemon" data-id="search-input"
+                placeholder="Finde dein Pokémon">
+            <button onclick="searchPokemonList()"></button>
         </div>
     </section>
     <section class="controls-container wrapper">

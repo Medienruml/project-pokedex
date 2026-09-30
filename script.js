@@ -1,9 +1,10 @@
 const BASE_URL = "https://pokeapi.co/api/v2/"
 
-let limit = 30;
+let limit = 150;
 let offset = 0;
 
 let pokemonList = [];
+let filteredPokemonList = [];
 let sortType = "number-asc";
 
 function init() {
@@ -16,37 +17,41 @@ function init() {
 async function loadPokemon() {
     let pokemonCounter = document.getElementById("pokemonCounter");
     let inputPokemonSort = document.getElementById("sortPokemon");
+    let loadMorePokemonButton = document.getElementById("loadMorePokemonButton");
 
-    let pokemonsResponse = await fetch(BASE_URL + `pokemon?limit=${limit}&offset=${offset}`);
-    let pokemonsResponseToJson = await pokemonsResponse.json();
+    loadMorePokemonButton.disabled = true;
 
-    
+    try{
+        let pokemonsResponse = await fetch(BASE_URL + `pokemon?limit=${limit}&offset=${offset}`);
+        let pokemonsResponseToJson = await pokemonsResponse.json();
 
-    pokemonList.push(...pokemonsResponseToJson.results);
+        pokemonList.push(...pokemonsResponseToJson.results);
 
-    for ( pokemon of pokemonList ) {
-        let pokemonResponse = await fetch(pokemon.url);
-        let pokemonResponseToJson = await pokemonResponse.json();
+        for ( let pokemon of pokemonsResponseToJson.results ) {
+            let pokemonResponse = await fetch(pokemon.url);
+            let pokemonResponseToJson = await pokemonResponse.json();
 
-        let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
+            let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
 
-        pokemon.name = pokeNameGerman;
+            pokemon.name = pokeNameGerman;
+        }    
+
+        pokemonCounter.innerHTML = getPokemonCounterTemplate(offset + limit);
+
+        offset += limit;
+
+        showPokemonCards(pokemonsResponseToJson.results);
+    }
+    finally {
+        loadMorePokemonButton.disabled = false;
     }
 
-    console.log(pokemonList);
-    
-
-    pokemonCounter.innerHTML = getPokemonCounterTemplate(offset + limit);
-
-    offset += limit;
-
-    inputPokemonSort.value = "number-asc";
-
-    sortPokemon();
 }
 
-function sortPokemon(sortType) {
-    let sortedPokemon = [...pokemonList];
+function sortPokemon(newSortType) {
+    sortType = newSortType;
+
+    let sortedPokemon = [...filteredPokemonList];
 
 
     switch (sortType) {
@@ -75,6 +80,9 @@ function sortPokemon(sortType) {
             break;
     }
 
+    let pokeGridContainer = document.getElementById("pokemonGrid");
+    pokeGridContainer.innerHTML = ""; 
+
     showPokemonCards(sortedPokemon);
 }
 
@@ -85,8 +93,6 @@ function getPokemonNumber(url) {
 async function showPokemonCards(pokemonList) {
     let pokeGridContainer = document.getElementById("pokemonGrid");
 
-    pokeGridContainer.innerHTML = "";
-
     for (let pokemon of pokemonList) {
         let pokeUrl = pokemon.url;
         let pokemonResponse = await fetch(pokeUrl);
@@ -94,11 +100,34 @@ async function showPokemonCards(pokemonList) {
 
         let pokeImgSrc = pokemonResponseToJson.sprites.other["official-artwork"].front_default || pokeResponseToJson.sprites.other.dream_world.front_default;
         let pokeNumber = pokemonResponseToJson.id;
-        pokeGridContainer.innerHTML += getPokemonCardTemplate(pokeImgSrc, pokemon.name, pokeNumber);
+        pokeGridContainer.insertAdjacentHTML("beforeend", getPokemonCardTemplate(pokeImgSrc, pokemon.name, pokeNumber));
 
         let typesContainer = document.getElementById("poke-types-" + pokeNumber);
         typesContainer.innerHTML += await showPokeTypes(pokemonResponseToJson);
     };
+}
+
+function searchPokemonList() {
+    let searchInputElement = document.getElementById("searchPokemon");
+    let searchValue = searchInputElement.value.toLowerCase().trim();
+
+    if(searchValue.length < 3) {
+        filteredPokemonList = [...pokemonList];
+        searchInputElement.value = "";
+        searchInputElement.setAttribute("placeholder", "Bitte mindestens 3 Buchstaben eingeben!");
+    } else {
+        filteredPokemonList = pokemonList.filter(pokemon => {
+            return pokemon.name.toLowerCase().includes(searchValue);
+        });
+
+        searchInputElement.value = "";
+        searchInputElement.setAttribute("placeholder", "Finde dein Pokémon");
+    }
+
+    let pokemonGridContainer = document.getElementById("pokemonGrid");
+    pokemonGridContainer.innerHTML = "";
+
+    showPokemonCards(filteredPokemonList);
 }
 
 async function showDialogContent(pokemonNumber) {
