@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex</title>
 
-    <link rel="shortcut icon" href="./assets/icons/Poké_Ball_icon.svg" type="image/x-icon">
+    <link rel="icon" href="./assets/icons/pokeball_icon.svg" type="image/x-icon">
 
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/fonts.css">
@@ -21,7 +21,7 @@
 
 <body onload="init()">
     <header class="wrapper">
-        <img src="./assets/icons/Poké_Ball_icon.svg" alt="Icon Pokéball">
+        <img src="./assets/icons/pokeball_icon.svg" alt="Icon Pokéball">
         <h1>Pokédex</h1>
 
     </header>
@@ -100,19 +100,19 @@
     <footer class="footer wrapper">
 
         <div class="logo">
-            <img src="./assets/icons/Poké_Ball_icon.svg" alt="">
+            <img src="./assets/icons/pokeball_icon.svg" alt="">
             <span>Pokédex</span>
         </div>
         <p>© Michael Ruml 2026</p>
 
         <nav>
-            <a href="https://pokeapi.co/" target="_blank">API</a>
+            <a href="https://pokeapi.co/" target="_blank">Pokémon-API</a>
             <a href="#">Impressum</a>
         </nav>
 
     </footer>
 
-    <dialog class="" id="pokemonDialog" onclick="closeDialog(event)"></dialog>
+    <dialog onkeydown="keyNavigation(event)" class="" id="pokemonDialog" onclick="closeDialog(event)"></dialog>
 
 </body>
 

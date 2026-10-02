@@ -1,7 +1,8 @@
 const BASE_URL = "https://pokeapi.co/api/v2/"
 
-let limit = 150;
+let limit = 30;
 let offset = 0;
+let currentPokemonNumber = 0;
 
 let pokemonList = [];
 let filteredPokemonList = [];
@@ -15,17 +16,25 @@ function init() {
 }
 
 async function loadPokemon() {
+    let pokemonGrid = document.getElementById("pokemonGrid");
     let pokemonCounter = document.getElementById("pokemonCounter");
-    let inputPokemonSort = document.getElementById("sortPokemon");
     let loadMorePokemonButton = document.getElementById("loadMorePokemonButton");
 
     loadMorePokemonButton.disabled = true;
+
+    /* pokemonGrid.insertAdjacentHTML("beforeend", getLoaderTemplate()); */
 
     try{
         let pokemonsResponse = await fetch(BASE_URL + `pokemon?limit=${limit}&offset=${offset}`);
         let pokemonsResponseToJson = await pokemonsResponse.json();
 
         pokemonList.push(...pokemonsResponseToJson.results);
+        filteredPokemonList = [...pokemonList];
+
+        for ( let pokemon of pokemonsResponseToJson.results ) {
+            let pokemonNumber = getPokemonNumber(pokemon.url);
+            pokemonGrid.insertAdjacentHTML("beforeend", getPokemonCardLoaderTemplate(pokemonNumber));
+        }
 
         for ( let pokemon of pokemonsResponseToJson.results ) {
             let pokemonResponse = await fetch(pokemon.url);
@@ -34,15 +43,18 @@ async function loadPokemon() {
             let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
 
             pokemon.name = pokeNameGerman;
+            await showPokemonCard(pokemon, pokemonResponseToJson);
         }    
 
         pokemonCounter.innerHTML = getPokemonCounterTemplate(offset + limit);
 
         offset += limit;
 
-        showPokemonCards(pokemonsResponseToJson.results);
-    }
-    finally {
+        /* showPokemonCards(pokemonsResponseToJson.results); */
+    } catch {
+        console.error("Fehler beim Laden der Pokémon.");
+    } finally {
+        /* document.querySelector(".pokeball-loader")?.remove(); */
         loadMorePokemonButton.disabled = false;
     }
 
@@ -80,14 +92,28 @@ function sortPokemon(newSortType) {
             break;
     }
 
+    filteredPokemonList = sortedPokemon;
+
     let pokeGridContainer = document.getElementById("pokemonGrid");
     pokeGridContainer.innerHTML = ""; 
 
-    showPokemonCards(sortedPokemon);
+    showPokemonCards(filteredPokemonList);
 }
 
 function getPokemonNumber(url) {
     return Number(url.split("/").at(-2));
+}
+
+async function showPokemonCard(pokemon, pokemonData) {
+    let pokemonGridContainer = document.getElementById("pokemonGrid");
+    let pokemonNumber = pokemonData.id;
+
+    let pokeImgSrc = pokemonData.sprites.other["official-artwork"].front_default || pokemonData.sprites.other.dream_world.front_default;
+    let pokemonCard = document.getElementById("pokemon-card-" + pokemonNumber);
+    pokemonCard.outerHTML = getPokemonCardTemplate(pokeImgSrc, pokemon.name, pokemonNumber);
+
+    let typesContainer = document.getElementById("poke-types-" + pokemonNumber);
+    typesContainer.innerHTML = await showPokeTypes(pokemonData);
 }
 
 async function showPokemonCards(pokemonList) {
@@ -98,7 +124,7 @@ async function showPokemonCards(pokemonList) {
         let pokemonResponse = await fetch(pokeUrl);
         let pokemonResponseToJson = await pokemonResponse.json();
 
-        let pokeImgSrc = pokemonResponseToJson.sprites.other["official-artwork"].front_default || pokeResponseToJson.sprites.other.dream_world.front_default;
+        let pokeImgSrc = pokemonResponseToJson.sprites.other["official-artwork"].front_default || pokemonResponseToJson.sprites.other.dream_world.front_default;
         let pokeNumber = pokemonResponseToJson.id;
         pokeGridContainer.insertAdjacentHTML("beforeend", getPokemonCardTemplate(pokeImgSrc, pokemon.name, pokeNumber));
 
@@ -127,7 +153,7 @@ function searchPokemonList() {
     let pokemonGridContainer = document.getElementById("pokemonGrid");
     pokemonGridContainer.innerHTML = "";
 
-    showPokemonCards(filteredPokemonList);
+    sortPokemon(sortType);
 }
 
 async function showDialogContent(pokemonNumber) {
@@ -141,6 +167,7 @@ async function showDialogContent(pokemonNumber) {
 
 async function openDialog(event) {
     let pokeNumber = Number(event.currentTarget.dataset.pokenumber);
+    currentPokemonNumber = pokeNumber;
     let pokeDialog = document.getElementById("pokemonDialog");
     pokeDialog.showModal();
 
@@ -264,7 +291,7 @@ async function showPokeEvolutionChain(evolutionChain) {
         html += getRightArrowTemplate();
 
         if (currentChain.evolvesTo.length > 1) {
-            for (nextEvolution of currentChain.evolvesTo) {
+            for (let nextEvolution of currentChain.evolvesTo) {
                 let nextPokemonObj = await getPokemonObjOverPokemonSpeciesUrl(nextEvolution.speciesUrl);
                 
                 html += getPokemonThumbnailTemplate(nextPokemonObj);
@@ -326,23 +353,45 @@ async function getPokemonObjOverPokemonSpeciesUrl(pokemonSpeciesUrl) {
 }
 
 
-async function showPrevPokemon(pokemonNummer) {
-    let prevPokemonId = pokemonNummer - 1;
+async function showPrevPokemon(pokemonNumber) {    
+    let currentIndex = filteredPokemonList.findIndex(
+        pokemon => getPokemonNumber(pokemon.url) === pokemonNumber
+    );
 
-    if (prevPokemonId < 1) {
-        prevPokemonId = offset;
+    if (currentIndex === 0) {
+        currentIndex = filteredPokemonList.length;
     } 
+
+    let prevPokemon = filteredPokemonList[currentIndex - 1];
+    let prevPokemonId = getPokemonNumber(prevPokemon.url);
 
     showDialogContent(prevPokemonId);
     
 }
 
-async function showNextPokemon(pokemonNummer) {
-     let nextPokemonId = pokemonNummer + 1;
+async function showNextPokemon(pokemonNumber) {
+    let currentIndex = filteredPokemonList.findIndex(
+        pokemon => getPokemonNumber(pokemon.url) === pokemonNumber
+    )
 
-    if (nextPokemonId > offset) {
-        nextPokemonId = 1;
+    if (currentIndex === filteredPokemonList.length - 1) {
+        currentIndex = -1;
     }  
 
+    let nextPokemon = filteredPokemonList[currentIndex + 1];
+    let nextPokemonId = getPokemonNumber(nextPokemon.url);
+
     showDialogContent(nextPokemonId);
+}
+
+function keyNavigation(event) {
+    if(event.key === "ArrowLeft") {
+        showPrevPokemon(currentPokemonNumber);
+        currentPokemonNumber--;
+    }
+
+    if(event.key === "ArrowRight") {
+        showNextPokemon(currentPokemonNumber);
+        currentPokemonNumber++;
+    }
 }

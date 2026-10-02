@@ -21,6 +21,24 @@ header img {
     animation: rotate360 5s linear infinite;
 }
 
+.pokeball-loader {
+    width: 120px;
+    height: 120px;
+    animation: rotate360 5s linear infinite;
+}
+
+.pokemon-card-loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    
+    width: 160px;
+    height: 184px;
+    padding: 8px;
+}
+
 @keyframes rotate360 {
     from {
         transform: rotate(0deg);
@@ -189,6 +207,7 @@ main .load-more-btn:hover {
     transform:translateY(-8px);
     box-shadow: 0 5px 8px var(--primary-color-50);
     transition: all 250ms ease-in-out;
+    cursor: pointer;
 }
 
 footer {
@@ -212,4 +231,37 @@ footer img {
     width: 24px;
     height: 24px;
     animation: rotate360 5s linear infinite;
+}
+
+footer nav {
+    display: flex;
+    gap: 8px;
+}
+
+footer a {
+    color: var(--primary-color-50);
+}
+
+footer a:hover {
+    cursor: pointer;
+    color: var(--primary-color-100);
+}
+
+@media screen and  (max-width: 992px) {
+    footer {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        display: flex;
+        justify-content: center;
+    }
+    footer {
+        height: 120px;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
 }

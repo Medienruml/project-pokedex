@@ -405,7 +405,7 @@ dialog .stats-section .stat-value {
     dialog .pokemon-details {
         justify-content: space-around;
         width: 268px;
-        height: 90dvh;
+        height: auto;
 
         gap: 8px;
     }

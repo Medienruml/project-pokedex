@@ -7,7 +7,7 @@ function getPokemonCardTemplate(src, name, number) {
             <div class="poke-types" id="poke-types-${number}">
 
             </div>
-        </artice>
+        </article>
     `;
 }
 
@@ -65,7 +65,7 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
             </section>
 
             <section class="details-content-2">
-                <img id="detailImage" src="${pokemonObj.sprites.other["official-artwork"].front_default || pokedata.sprites.other.dream_world.front_default}" alt="">
+                <img id="detailImage" src="${pokemonObj.sprites.other["official-artwork"].front_default || pokemonObj.sprites.other.dream_world.front_default}" alt="">
                 <div class="evolution-section">
 
                     <h3>Entwicklungen</h3>
@@ -128,5 +128,21 @@ function getLoadButtonTemplate(limit) {
 function getPokemonCounterTemplate(pokemonCount) {
     return `
         <span>${pokemonCount}</span> von <span>1.025</span> Pokémon angezeigt
+    `;
+}
+
+function getLoaderTemplate() {
+    return `
+        <div class="pokeball-loader">
+            <img src="./assets/icons/pokeball_icon_loader.svg" class="pokeball" alt="Loader in Form eines Pokeballs"/>
+        </div>
+    `;
+}
+
+function getPokemonCardLoaderTemplate(pokemonNumber) {
+    return `
+        <div class="pokemon-card-loader" id="pokemon-card-${pokemonNumber}">
+            <img src="./assets/icons/pokeball_icon_loader.svg" class="pokeball-loader" alt="Loader in Form eines Pokeballs"/>
+        </div>
     `;
 }
