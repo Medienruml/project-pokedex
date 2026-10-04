@@ -1,7 +1,7 @@
 function getPokemonCardTemplate(src, name, number) {
     return `
-        <article data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)">
-            <img class="poke-image" src="${src}" alt="" />
+        <article data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)" data-id="card" role="button">
+            <img class="poke-image" src="${src}" alt="Pokémon Image" data-id="card-image"/>
             <p class="poke-number">#${number}</p>
             <p class="poke-name">${name}</p>
             <div class="poke-types" id="poke-types-${number}">
@@ -28,11 +28,11 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
     let pokeEvoChainHtml = await showPokeEvolutionChain(evolutionChain);
 
     return `
-        <button onclick="closeDialogBtn()" class="dialog-close" id="closeDialog"></button>
+        <button onclick="closeDialogBtn()" class="dialog-close" id="closeDialog" data-id="close-dialog-button"></button>
 
-        <button onclick="showPrevPokemon(${pokemonObj.id})" class="pokemon-navigation previous" id="previousPokemon"></button>
+        <button onclick="showPrevPokemon(${pokemonObj.id})" class="pokemon-navigation previous" id="previousPokemon" data-id="prev-button"></button>
 
-        <div class="pokemon-details">
+        <div class="pokemon-details" data-id="overlay-pokemon-name">
             <section class="details-content-1">
                 <div class="number-and-name">
                     <span id="detailNumber">#${pokemonObj.id}</span>
@@ -65,7 +65,7 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
             </section>
 
             <section class="details-content-2">
-                <img id="detailImage" src="${pokemonObj.sprites.other["official-artwork"].front_default || pokemonObj.sprites.other.dream_world.front_default}" alt="">
+                <img id="detailImage" src="${pokemonObj.sprites.other["official-artwork"].front_default || pokemonObj.sprites.other.dream_world.front_default}" alt="Pokémon Image" data-id="dialog-image">
                 <div class="evolution-section">
 
                     <h3>Entwicklungen</h3>
@@ -95,7 +95,7 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
 
         </div>
 
-        <button onclick="showNextPokemon(${pokemonObj.id})" class="pokemon-navigation next" id="nextPokemon"></button>
+        <button onclick="showNextPokemon(${pokemonObj.id})" class="pokemon-navigation next" id="nextPokemon" data-id="next-button"></button>
     `;
 }
 
@@ -144,5 +144,11 @@ function getPokemonCardLoaderTemplate(pokemonNumber) {
         <div class="pokemon-card-loader" id="pokemon-card-${pokemonNumber}">
             <img src="./assets/icons/pokeball_icon_loader.svg" class="pokeball-loader" alt="Loader in Form eines Pokeballs"/>
         </div>
+    `;
+}
+
+function getNotFoundTemplate() {
+    return `
+        <p class="not-found" data-id="not-found">Die Suche ergab keinen Treffer!</p>
     `;
 }

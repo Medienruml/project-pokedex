@@ -18,7 +18,7 @@ h1 {
 }
 
 h2 {
-    font: 700 2rem/1.2 "Roboto";
+    font: 700 clamp(1.25rem, calc(1.036rem + 1.071vw), 2.00rem)/1.2 "Roboto";
 }
 
 h3 {

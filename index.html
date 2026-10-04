@@ -35,7 +35,7 @@
     </section>
     <section class="search-section wrapper">
         <div class="search-container">
-            <input onkeydown="if (event.key === 'Enter') searchPokemonList()" type="text" name="search-bar" id="searchPokemon" data-id="search-input"
+            <input onkeydown="if (event.key === 'Enter') searchPokemonList()" type="text" name="search-bar" id="searchPokemon" data-id="search-button"
                 placeholder="Finde dein Pokémon">
             <button onclick="searchPokemonList()"></button>
         </div>
@@ -100,19 +100,18 @@
     <footer class="footer wrapper">
 
         <div class="logo">
-            <img src="./assets/icons/pokeball_icon.svg" alt="">
+            <img src="./assets/icons/pokeball_icon.svg" alt="Pokéball Icon">
             <span>Pokédex</span>
         </div>
         <p>© Michael Ruml 2026</p>
 
         <nav>
             <a href="https://pokeapi.co/" target="_blank">Pokémon-API</a>
-            <a href="#">Impressum</a>
         </nav>
 
     </footer>
 
-    <dialog onkeydown="keyNavigation(event)" class="" id="pokemonDialog" onclick="closeDialog(event)"></dialog>
+    <dialog onkeydown="keyNavigation(event)" id="pokemonDialog" onclick="closeDialog(event)" data-id="dialog"></dialog>
 
 </body>
 
