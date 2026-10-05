@@ -244,6 +244,25 @@ dialog .stats-section {
 
 dialog .stats-section table {
     width: 100%;
+    table-layout: fixed;
+}
+
+dialog .stats-section table .name {
+    width: 25%;
+}
+
+dialog .stats-section table .stat-bar {
+    width: 50%;
+}
+
+dialog .stats-section table .value {
+    width: 12%;
+}
+
+dialog .stats-section progress {
+    height: 10px;
+    display: block;
+    width: 100%;
 }
 
 dialog .stats-section progress {
@@ -352,6 +371,10 @@ dialog .stats-section .stat-value {
         width: unset;
     }
 
+    dialog .pokemon-details section.details-content-3 .stats-section {
+        width: 280px;
+    }
+
     dialog .description-section {
         width: 280px;
     }
@@ -426,13 +449,31 @@ dialog .stats-section .stat-value {
         width: 252px;
     }
 
-    dialog .stats-section {
+    dialog .pokemon-details section.details-content-3 .stats-section {
         width: 252px;
+    }
+
+    dialog .stats-section table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    dialog .stats-section table .name {
+        width: 25%;
+    }
+
+    dialog .stats-section table .stat-bar {
+        width: 50%;
+    }
+
+    dialog .stats-section table .value {
+        width: 12%;
     }
 
     dialog .stats-section progress {
         height: 10px;
         display: block;
+        width: 100%;
     }
 
     dialog .details-content-2 > img{
@@ -441,7 +482,7 @@ dialog .stats-section .stat-value {
     }
 
     dialog .details-content-1 .basic-info div p {
-        font: 900 0.55rem/1.2 "Roboto";
+        font: 900 1rem/1.2 "Roboto";
     }
 
     dialog #detailNumber {
@@ -449,31 +490,31 @@ dialog .stats-section .stat-value {
     }
 
     dialog #detailName {
-        font: 900 1.4rem/1.2 "Roboto";
+        font: 900 26px/1.2 "Roboto";
     }
 
     dialog #detailTypes p {
-        font: 700 0.55rem/1.2 "Roboto";
+        font: 700 16px/1.2 "Roboto";
     }
 
     dialog .stats-section .stat-name {
-        font: 400 0.7rem/1.2 "Roboto";
+        font: 400 14px/1.2 "Roboto";
     }
 
     dialog .stats-section .stat-value {
-        font: 800 0.7rem/1.2 "Roboto";
+        font: 800 14px/1.2 "Roboto";
     }
 
     h3 {
-        font: 800 0.65em/1.2 "Roboto";
+        font: 800 16px/1.2 "Roboto";
     }
 
     dialog li.ability {
-        font: 300 0.7rem / 1.2 "Roboto";
+        font: 300 16px/ 1.2 "Roboto";
     }
 
     dialog p {
-        font: 400 0.7rem / 1.2 "Roboto";
+        font: 400 16px / 1.2 "Roboto";
     }
 
     dialog .details-content-2 .evolution-chain img {

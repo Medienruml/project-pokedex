@@ -67,12 +67,24 @@ header img {
 
 .hero-container {
     position: absolute;
+    width: 100%;
+    padding: 0 16px;
     top: 104px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
-.hero-container h2, .hero-container p {
-    text-shadow: 0 0 5px white;
+.hero-container p {
+    width: min(400px, 100%);
+    margin-left: 16px;
+    margin-right: 16px;
     text-align: center;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 999px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .hero-container p {
@@ -105,6 +117,8 @@ header img {
     width: min(800px, 100%);
     height: 56px;
     padding-left: 64px;
+    margin-left: -24px;
+    margin-right: -24px;
     border: unset;
     border-radius: 999px;
     box-shadow: 0 5px 8px var(--primary-color-50);
@@ -121,7 +135,7 @@ header img {
 
 .search-container button {
     position:relative;
-    right: 28px;
+    right: 4px;
     width: 48px;
     height: 48px;
     background-color: var(--accent-color-100);

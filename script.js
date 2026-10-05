@@ -132,7 +132,7 @@ function searchPokemonList() {
     if(searchValue.length < 3) {
         filteredPokemonList = [...pokemonList];
         searchInputElement.value = "";
-        searchInputElement.setAttribute("placeholder", "Bitte min. 3 Buchstaben eingeben!");
+        searchInputElement.setAttribute("placeholder", "min. 3 Zeichen");
     } else {
         filteredPokemonList = pokemonList.filter(pokemon => {
             return pokemon.name.toLowerCase().includes(searchValue);

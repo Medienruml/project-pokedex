@@ -1,13 +1,13 @@
 function getPokemonCardTemplate(src, name, number) {
     return `
-        <article data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)" data-id="card" role="button">
+        <li data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)" data-id="card" role="button">
             <img class="poke-image" src="${src}" alt="Pokémon Image" data-id="card-image"/>
             <p class="poke-number">#${number}</p>
             <p class="poke-name">${name}</p>
             <div class="poke-types" id="poke-types-${number}">
 
             </div>
-        </article>
+        </li>
     `;
 }
 
@@ -87,6 +87,11 @@ async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
                     <h3>Statuswerte</h3>
                     <div id="detailStats" class="stats">
                         <table>
+                            <colgroup>
+                                <col class="name">
+                                <col class="stat-bar">
+                                <col class="value">
+                            </colgroup>
                             ${pokeStatsHtml}
                         </table>
                     </div>

@@ -6,7 +6,7 @@
     padding: 40px 0;
 }
 
-.pokemon-grid article {
+.pokemon-grid li {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,11 +25,11 @@
     border-bottom-right-radius: 100% 20%;
 }
 
-.pokemon-grid article:hover {
+.pokemon-grid li:hover {
     cursor: pointer;
 }
 
-.pokemon-grid article .poke-image {
+.pokemon-grid li .poke-image {
     position: relative;
     top: -32px;
     width: 96px;
@@ -40,25 +40,25 @@
     filter:saturate(1.4);
 }
 
-.pokemon-grid article:hover .poke-image {
+.pokemon-grid li:hover .poke-image {
     transform: scale(1.3);
     filter: saturate(1.4) drop-shadow( 0 5px 8px var(--primary-color-50));
     transition: all 250ms ease-in-out;
 }
 
-.pokemon-grid article .poke-name {
+.pokemon-grid li .poke-name {
     text-transform: capitalize;
     font: 700 1.2rem/1.2 "Roboto Condensed";
 }
 
-.pokemon-grid article .poke-types {
+.pokemon-grid li .poke-types {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4px;
 }
 
-.pokemon-grid article .poke-types p {
+.pokemon-grid li .poke-types p {
     padding: 2px 8px;
     border-radius: 999px;
     text-align: center;
