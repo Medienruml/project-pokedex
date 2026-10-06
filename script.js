@@ -8,6 +8,8 @@ let pokemonList = [];
 let filteredPokemonList = [];
 let sortType = "number-asc";
 
+let typeTranslations = {};
+
 
 function init() {
     offset = 0;
@@ -27,27 +29,33 @@ async function loadPokemon() {
     try{
         let pokemonsResponse = await fetch(BASE_URL + `pokemon?limit=${limit}&offset=${offset}`);
         let pokemonsResponseToJson = await pokemonsResponse.json();
-
-        pokemonList.push(...pokemonsResponseToJson.results);
-        filteredPokemonList = [...pokemonList];
-
+        
         generateLoaderImages(pokemonsResponseToJson.results, pokemonGrid)
 
-        for ( let pokemon of pokemonsResponseToJson.results ) {
+        let pokemonPromises = pokemonsResponseToJson.results.map(async (pokemon) => {
             let pokemonResponse = await fetch(pokemon.url);
-            let pokemonResponseToJson = await pokemonResponse.json();
+            let pokemonData = await pokemonResponse.json();
 
-            let pokeNameGerman = await getTranscription(pokemonResponseToJson.species.url, "de");
+            let pokemonNameGerman = await getTranscription(pokemonData.species.url, "de");
 
-            pokemon.name = pokeNameGerman;
-            await showPokemonCard(pokemon, pokemonResponseToJson);
-        }    
+            return {
+                ...pokemon, name: pokemonNameGerman, data: pokemonData
+            };
+        })
+
+        let loadedPokemons = await Promise.all(pokemonPromises);
+    
+        console.log(loadedPokemons);
+        
+        pokemonList.push(...loadedPokemons);
+        filteredPokemonList = [...pokemonList];
 
         pokemonCounter.innerHTML = getPokemonCounterTemplate(offset + limit);
-
         offset += limit;
+
+        showPokemonCards(filteredPokemonList);
     } catch {
-        console.error("Fehler beim Laden der Pokémon.");
+        console.error("Fehler beim Laden der Pokémon.", error);
     } finally {
         loadMorePokemonButton.disabled = false;
     }
@@ -62,21 +70,22 @@ function generateLoaderImages(pokemonData, pokemonGrid) {
 }
 
 
+function getPokemonNumber(url) {
+    
+
+
 function sortPokemon(newSortType) {
     sortType = newSortType;
     let sortedPokemon = [...filteredPokemonList];
 
     switch (sortType) {
-        case "number-asc": sortedPokemon.sort((a, b) => {return getPokemonNumber(a.url) - getPokemonNumber(b.url);});
+        case "number-asc": sortedPokemon.sort((a, b) => {return a.data.id - b.data.id;});
             break;
-        case "number-desc":
-            sortedPokemon.sort((a, b) => {return getPokemonNumber(b.url) - getPokemonNumber(a.url);});
+        case "number-desc": sortedPokemon.sort((a, b) => {return b.data.id - a.data.id;});
             break;
-        case "name-asc":
-            sortedPokemon.sort((a, b) => {return a.name.localeCompare(b.name);});
+        case "name-asc": sortedPokemon.sort((a, b) => {return a.name.localeCompare(b.name);});
             break;
-        case "name-desc":
-            sortedPokemon.sort((a, b) => {return b.name.localeCompare(a.name);});
+        case "name-desc": sortedPokemon.sort((a, b) => {return b.name.localeCompare(a.name);});
             break;
     }
 
@@ -86,16 +95,12 @@ function sortPokemon(newSortType) {
     pokeGridContainer.innerHTML = ""; 
 
     showPokemonCards(filteredPokemonList);
+}return Number(url.split("/").at(-2));
 }
 
 
-function getPokemonNumber(url) {
-    return Number(url.split("/").at(-2));
-}
-
-
-async function showPokemonCard(pokemon, pokemonData) {
-    let pokemonGridContainer = document.getElementById("pokemonGrid");
+async function showPokemonCard(pokemon) {
+    let pokemonData = pokemon.data;
     let pokemonNumber = pokemonData.id;
 
     let pokeImgSrc = pokemonData.sprites.other["official-artwork"].front_default || pokemonData.sprites.other.dream_world.front_default;
@@ -107,20 +112,22 @@ async function showPokemonCard(pokemon, pokemonData) {
 }
 
 
-async function showPokemonCards(pokemonList) {
+function showPokemonCards(pokemonList) {
     let pokeGridContainer = document.getElementById("pokemonGrid");
+    pokeGridContainer.innerHTML = "";
 
     for (let pokemon of pokemonList) {
-        let pokeUrl = pokemon.url;
-        let pokemonResponse = await fetch(pokeUrl);
-        let pokemonResponseToJson = await pokemonResponse.json();
+        let pokemonData = pokemon.data;
 
-        let pokeImgSrc = pokemonResponseToJson.sprites.other["official-artwork"].front_default || pokemonResponseToJson.sprites.other.dream_world.front_default;
-        let pokeNumber = pokemonResponseToJson.id;
+        let pokeImgSrc = pokemonData.sprites.other["official-artwork"].front_default || pokemonData.sprites.other.dream_world.front_default;
+        let pokeNumber = pokemonData.id;
         pokeGridContainer.insertAdjacentHTML("beforeend", getPokemonCardTemplate(pokeImgSrc, pokemon.name, pokeNumber));
 
         let typesContainer = document.getElementById("poke-types-" + pokeNumber);
-        typesContainer.innerHTML += await showPokeTypes(pokemonResponseToJson);
+
+        showPokeTypes(pokemonData).then(types => {
+            typesContainer.innerHTML = types;
+        });
     };
 }
 
@@ -195,6 +202,21 @@ async function getTranscription(url, language) {
     return germanName.name;
 }
 
+async function getTypeTranslation(url, language) {
+    if (typeTranslations[url]) {        
+        return typeTranslations[url];
+    }
+    
+    typeTranslations[url] = fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let germanNameObj = data.names.find(name => name.language.name == language);
+            return germanNameObj.name;
+        });
+
+    return await typeTranslations[url];
+}
+
 
 async function showPokeTypes(pokedata) {
     let pokeTypes = pokedata.types;
@@ -203,9 +225,9 @@ async function showPokeTypes(pokedata) {
 
     for (let pokeType of pokeTypes) {
         let typeName = pokeType.type.name;
-        let typeNameGerman = await getTranscription(pokeType.type.url, "de");
+        let typeNameGerman = await getTypeTranslation(pokeType.type.url, "de");
 
-        html += "<p class='type-" + typeName + "'>" + typeNameGerman + "</p>";
+        html += `<p class="type-${typeName}">${typeNameGerman}</p>`;
     }
 
     return html;
