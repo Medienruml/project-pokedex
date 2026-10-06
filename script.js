@@ -28,9 +28,9 @@ async function loadPokemon() {
 
     try{
         let pokemonsResponse = await fetch(BASE_URL + `pokemon?limit=${limit}&offset=${offset}`);
-        let pokemonsResponseToJson = await pokemonsResponse.json();
-        
-        generateLoaderImages(pokemonsResponseToJson.results, pokemonGrid)
+        let pokemonsResponseToJson = await pokemonsResponse.json();        
+
+        generateLoaderImages(pokemonsResponseToJson.results, pokemonGrid);
 
         let pokemonPromises = pokemonsResponseToJson.results.map(async (pokemon) => {
             let pokemonResponse = await fetch(pokemon.url);
@@ -71,7 +71,8 @@ function generateLoaderImages(pokemonData, pokemonGrid) {
 
 
 function getPokemonNumber(url) {
-    
+    return Number(url.split("/").at(-2));
+}
 
 
 function sortPokemon(newSortType) {
@@ -95,7 +96,6 @@ function sortPokemon(newSortType) {
     pokeGridContainer.innerHTML = ""; 
 
     showPokemonCards(filteredPokemonList);
-}return Number(url.split("/").at(-2));
 }
 
 
