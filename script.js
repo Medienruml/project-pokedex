@@ -20,6 +20,8 @@ function init() {
 
 
 async function loadPokemon() {
+    showLoadingOverlay();
+
     let pokemonGrid = document.getElementById("pokemonGrid");
     let pokemonCounter = document.getElementById("pokemonCounter");
     let loadMorePokemonButton = document.getElementById("loadMorePokemonButton");
@@ -60,6 +62,7 @@ async function loadPokemon() {
         console.error("Fehler beim Laden der Pokémon.", error);
     } finally {
         loadMorePokemonButton.disabled = false;
+        hideLoadingOverlay();
     }
 }
 
@@ -179,9 +182,11 @@ async function openDialog(event) {
     let pokeNumber = Number(event.currentTarget.dataset.pokenumber);
     currentPokemonNumber = pokeNumber;
     let pokeDialog = document.getElementById("pokemonDialog");
+
+    pokeDialog.innerHTML = getDialogLoaderTemplate();
     pokeDialog.showModal();
 
-    showDialogContent(pokeNumber);
+    await showDialogContent(pokeNumber);
 }
 
 
@@ -433,4 +438,18 @@ function keyNavigation(event) {
         showNextPokemon(currentPokemonNumber);
         currentPokemonNumber++;
     }
+}
+
+
+function showLoadingOverlay() {
+    let loadingOverlayElement = document.getElementById("loadingOverlay");
+
+    loadingOverlayElement.style.display = "flex";
+}
+
+
+function hideLoadingOverlay() {
+    let loadingOverlayElement = document.getElementById("loadingOverlay");
+
+    loadingOverlayElement.style.display = "none";
 }

@@ -11,6 +11,7 @@ function getPokemonCardTemplate(src, name, number) {
     `;
 }
 
+
 async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
     let pokeTypesHtml = await showPokeTypes(pokemonObj);
 
@@ -114,6 +115,7 @@ function getPokemonThumbnailTemplate(pokemonObj) {
     `;
 }
 
+
 function getRightArrowTemplate() {
     return `
         <img 
@@ -124,17 +126,20 @@ function getRightArrowTemplate() {
     `;
 }
 
+
 function getLoadButtonTemplate(limit) {
     return `
         + <span>${limit}</span> weitere Pokémon laden
     `;
 }
 
+
 function getPokemonCounterTemplate(pokemonCount) {
     return `
         <span>${pokemonCount}</span> von <span>1.025</span> Pokémon angezeigt
     `;
 }
+
 
 function getLoaderTemplate() {
     return `
@@ -144,6 +149,7 @@ function getLoaderTemplate() {
     `;
 }
 
+
 function getPokemonCardLoaderTemplate(pokemonNumber) {
     return `
         <div class="pokemon-card-loader" id="pokemon-card-${pokemonNumber}">
@@ -152,8 +158,18 @@ function getPokemonCardLoaderTemplate(pokemonNumber) {
     `;
 }
 
+
 function getNotFoundTemplate() {
     return `
         <p class="not-found" data-id="not-found">Die Suche ergab keinen Treffer!</p>
+    `;
+}
+
+
+function getDialogLoaderTemplate() {
+    return `
+        <div class="dialog-loader">
+            <img class="loader-spinner" src="./assets/icons/pokeball_icon_loader.svg" alt="Pokéball Loader Icon">
+        </div>
     `;
 }
