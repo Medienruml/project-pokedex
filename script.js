@@ -23,6 +23,7 @@ async function loadPokemon() {
     let pokemonGrid = document.getElementById("pokemonGrid");
     let pokemonCounter = document.getElementById("pokemonCounter");
     let loadMorePokemonButton = document.getElementById("loadMorePokemonButton");
+    let searchInputElement = document.getElementById("searchPokemon");
 
     loadMorePokemonButton.disabled = true;
 
@@ -44,17 +45,18 @@ async function loadPokemon() {
         })
 
         let loadedPokemons = await Promise.all(pokemonPromises);
-    
-        console.log(loadedPokemons);
         
         pokemonList.push(...loadedPokemons);
         filteredPokemonList = [...pokemonList];
+
+        searchInputElement.value = "";
+        searchInputElement.setAttribute("placeholder", "Finde dein Pokémon");
 
         pokemonCounter.innerHTML = getPokemonCounterTemplate(offset + limit);
         offset += limit;
 
         showPokemonCards(filteredPokemonList);
-    } catch {
+    } catch (error) {
         console.error("Fehler beim Laden der Pokémon.", error);
     } finally {
         loadMorePokemonButton.disabled = false;
