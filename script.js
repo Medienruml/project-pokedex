@@ -136,10 +136,14 @@ function searchPokemonList() {
     let searchInputElement = document.getElementById("searchPokemon");
     let searchValue = searchInputElement.value.toLowerCase().trim();
 
-    if(searchValue.length < 3) {
-        filteredPokemonList = [...pokemonList];
+    if(searchValue.length > 0 && searchValue.length < 3) {
         searchInputElement.value = "";
         searchInputElement.setAttribute("placeholder", "min. 3 Zeichen");
+        return
+    } 
+    
+    if (searchValue.length == 0) {
+        filteredPokemonList = [...pokemonList];
     } else {
         filteredPokemonList = pokemonList.filter(pokemon => {
             return pokemon.name.toLowerCase().includes(searchValue);
@@ -150,7 +154,6 @@ function searchPokemonList() {
     }
 
     let pokemonGridContainer = document.getElementById("pokemonGrid");
-    pokemonGridContainer.innerHTML = "";
 
     if (filteredPokemonList.length == 0) {
         pokemonGridContainer.innerHTML = getNotFoundTemplate();
