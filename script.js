@@ -9,6 +9,7 @@ let filteredPokemonList = [];
 let sortType = "number-asc";
 
 let typeTranslations = {};
+let transcriptionCache = {};
 
 
 function init() {
@@ -204,12 +205,21 @@ function closeDialog(event) {
 
 
 async function getTranscription(url, language) {
-    let response = await fetch(url);
-    let data = await response.json();
+    let cacheKey = `${url}-${language}`;
 
-    let germanName = data.names.find(name => name.language.name == language);
+    if (transcriptionCache[cacheKey]) {
+        return transcriptionCache[cacheKey];
+    }
 
-    return germanName.name;
+    transcriptionCache[cacheKey] = fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let germanNameObj = data.names.find(name => name.language.name == language);
+            
+            return germanNameObj.name;
+        });
+
+    return await transcriptionCache[cacheKey];
 }
 
 async function getTypeTranslation(url, language) {
