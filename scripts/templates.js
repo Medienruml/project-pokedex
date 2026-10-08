@@ -1,12 +1,12 @@
 function getPokemonCardTemplate(src, name, number) {
     return `
-        <li data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)" data-id="card" role="button">
-            <img class="poke-image" src="${src}" alt="Pokémon Image" data-id="card-image"/>
-            <p class="poke-number">#${number}</p>
-            <p class="poke-name">${name}</p>
-            <div class="poke-types" id="poke-types-${number}">
-
-            </div>
+        <li>
+            <button type="button" data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)" data-id="card">
+                <img class="poke-image" src="${src}" alt="Pokémon Image" data-id="card-image"/>
+                <p class="poke-number">#${number}</p>
+                <p class="poke-name">${name}</p>
+                <div class="poke-types" id="poke-types-${number}"></div>
+            </button>
         </li>
     `;
 }

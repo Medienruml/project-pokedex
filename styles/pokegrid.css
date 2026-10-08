@@ -25,6 +25,11 @@
     border-bottom-right-radius: 100% 20%;
 }
 
+.pokemon-grid li button {
+    background-color: unset;
+    border: unset;
+}
+
 .pokemon-grid li:hover {
     cursor: pointer;
 }
