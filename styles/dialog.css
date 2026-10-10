@@ -442,6 +442,7 @@ dialog .stats-section .stat-value {
         justify-content: space-around;
         width: 268px;
         height: auto;
+        padding: 40px 8px;
 
         gap: 8px;
     }
@@ -460,6 +461,18 @@ dialog .stats-section .stat-value {
 
     dialog .description-section {
         width: 252px;
+    }
+
+    dialog .pokemon-details section.details-content-2 {
+        width: 268px;
+    }
+
+    dialog .details-content-2 .evolution-chain .evolution-row {
+        width: 268px;
+    }
+
+    dialog .pokemon-details section.details-content-3 {
+        width: 268px;
     }
 
     dialog .pokemon-details section.details-content-3 .stats-section {

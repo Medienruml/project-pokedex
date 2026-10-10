@@ -14,9 +14,12 @@
     <link rel="stylesheet" href="./styles/pokegrid.css">
     <link rel="stylesheet" href="./styles/dialog.css">
     <link rel="stylesheet" href="style.css">
-
-    <script src="./script.js"></script>
+    
     <script src="./scripts/templates.js"></script>
+    <script src="./scripts/api.js"></script>
+    <script src="./scripts/pokemon.js"></script>
+    <script src="./scripts/dialog.js"></script>
+    <script src="./script.js"></script>
 </head>
 
 <body onload="init()">
@@ -96,9 +99,10 @@
     <main class="wrapper" data-id="content">
         <ul class="pokemon-grid" id="pokemonGrid">
         </ul>
-        <button onclick="loadPokemon()" data-id="load-more-button" class="load-more-btn" id="loadMorePokemonButton">
+        <button onclick="loadPokemon()" data-id="load-more-button" style="display: block;" class="button" id="loadMorePokemonButton">
             + <span>30</span> weitere Pokémon laden
         </button>
+        <button onclick="resetSearch()" style="display: none" class="button hide" id="resetSearchBtn">Suche zurücksetzen</button>
     </main>
     <footer class="footer wrapper">
 

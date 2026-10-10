@@ -2,7 +2,7 @@ function getPokemonCardTemplate(src, name, number) {
     return `
         <li>
             <button type="button" data-pokenumber="${number}" class="pokemon-card" onclick="openDialog(event)" data-id="card">
-                <img class="poke-image" src="${src}" alt="Pokémon Image" data-id="card-image"/>
+                <img class="poke-image" src="${src}" alt="Pokémon Image of ${name}" data-id="card-image"/>
                 <p class="poke-number">#${number}</p>
                 <p class="poke-name">${name}</p>
                 <div class="poke-types" id="poke-types-${number}"></div>
@@ -13,20 +13,16 @@ function getPokemonCardTemplate(src, name, number) {
 
 
 async function getPokemonDialogTemplate(pokemonObj, pokemonSpeciesObj) {
-    let pokeTypesHtml = await showPokeTypes(pokemonObj);
-
-    let pokeAbilitiesHtml = await showAbilities(pokemonObj);
-
-    let pokeNameGerman = await getTranscription(BASE_URL + "pokemon-species/" + pokemonObj.id, "de");
-    let pokeNameJapanese = await getTranscription(BASE_URL + "pokemon-species/" + pokemonObj.id, "ja")
-
-    let pokeFlavorTextHtml = await showFlavorText(pokemonObj);
-
-    let pokeStatsHtml = await showPokeStats(pokemonObj);
-
-    let evolutionChainObj = await getEvolutionChainObj(pokemonObj.id);
+    let pokeTypesHtml = await getPokeTypesHTML(pokemonObj);
+    let pokeAbilitiesHtml = await getAbilitiesHTML(pokemonObj);
+    let pokemonSpeciesUrl = BASE_URL + "pokemon-species/" + pokemonObj.id;
+    let pokeNameGerman = await getTranscription(pokemonSpeciesUrl, "de");
+    let pokeNameJapanese = await getTranscription(pokemonSpeciesUrl, "ja")
+    let pokeFlavorTextHtml = await getFlavorTextHTML(pokemonSpeciesObj);
+    let pokeStatsHtml = await getPokemonStatsHTML(pokemonObj);
+    let evolutionChainObj = await getEvolutionChainObj(pokemonSpeciesObj);
     let evolutionChain = await getEvolutionChain(evolutionChainObj.chain);
-    let pokeEvoChainHtml = await showPokeEvolutionChain(evolutionChain);
+    let pokeEvoChainHtml = await getPokemonEvolutionChainHTML(evolutionChain);
 
     return `
         <button onclick="closeDialogBtn()" class="dialog-close" id="closeDialog" data-id="close-dialog-button"></button>
@@ -137,15 +133,6 @@ function getLoadButtonTemplate(limit) {
 function getPokemonCounterTemplate(pokemonCount) {
     return `
         <span>${pokemonCount}</span> von <span>1.025</span> Pokémon angezeigt
-    `;
-}
-
-
-function getLoaderTemplate() {
-    return `
-        <div class="pokeball-loader">
-            <img src="./assets/icons/pokeball_icon_loader.svg" class="pokeball" alt="Loader in Form eines Pokeballs"/>
-        </div>
     `;
 }
 

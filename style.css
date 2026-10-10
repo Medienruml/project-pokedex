@@ -227,11 +227,15 @@ main {
     flex-grow: 1;
 }
 
+main button {
+    cursor: pointer;
+}
+
 main .not-found {
     font: 700 1.3rem/1.2 "Roboto";
 }
 
-main .load-more-btn {
+main .button {
     padding: 16px 24px;
     margin: 40px 0;
     background-color: var(--accent-color-100);
@@ -243,7 +247,7 @@ main .load-more-btn {
     transition: all 250ms ease-in-out;
 }
 
-main .load-more-btn:hover {
+main .button:hover {
     transform:translateY(-8px);
     box-shadow: 0 5px 8px var(--primary-color-50);
     transition: all 250ms ease-in-out;
