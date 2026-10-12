@@ -21,7 +21,7 @@ function init() {
 
 
 async function loadPokemon() {
-    showLoadingOverlay();
+    setLoadingOverlayStyle("flex");
     let loadMorePokemonButton = document.getElementById("loadMorePokemonButton");
     loadMorePokemonButton.disabled = true;
 
@@ -36,7 +36,7 @@ async function loadPokemon() {
         console.error("Fehler beim Laden der Pokémon.", error);
     } finally {
         loadMorePokemonButton.disabled = false;
-        hideLoadingOverlay();
+        setLoadingOverlayStyle("none");
     }
 }
 
@@ -125,15 +125,8 @@ async function getPokemonStatsHTML(pokemonData) {
 }
 
 
-function showLoadingOverlay() {
+function setLoadingOverlayStyle(styleValue) {
     let loadingOverlayElement = document.getElementById("loadingOverlay");
 
-    loadingOverlayElement.style.display = "flex";
-}
-
-
-function hideLoadingOverlay() {
-    let loadingOverlayElement = document.getElementById("loadingOverlay");
-
-    loadingOverlayElement.style.display = "none";
+    loadingOverlayElement.style.display = styleValue;
 }
